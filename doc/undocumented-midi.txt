@@ -1,0 +1,32 @@
+Undocumented outgoing NRPN
+==========================
+NRPN 1025: Set MIDI Resolution (0 = 7 bit, 8192 = 14 bit)
+NRPN 1026: Set MIDI Channel In
+NRPN 1027: Set MIDI Channel Out
+NRPN 1011: ?
+NRPN 1012: ?
+NRPN 2383: ?
+NRPN 2384: ?
+
+Undocumented incoming NRPN
+==========================
+NRPN 8: ?
+NRPN 136: ?
+NRPN 264: ?
+NRPN 10130: ?
+NRPN 10258: Serial number
+NRPN 14727: ?
+NRPN 14727: ?
+NRPN 14855: ?
+
+Undocumented outgoing CC
+========================
+The app sends a sequence of unknown CCs during initialization:
+CC 118, Data 127
+CC 117, Data 0
+CC 117, Data 0
+CC 117, Data 28
+CC 117, Data 0
+CC 117, Data 0
+CC 117, Data 0
+CC 118, Data 126

@@ -1,0 +1,38 @@
+<RCC>
+    <qresource prefix="/">
+        <file>components/LabeledSlider.qml</file>
+        <file>components/Register.qml</file>
+        <file>components/Oscillator2.qml</file>
+        <file>PageEditor.qml</file>
+        <file>PageLibrary.qml</file>
+        <file>components/ScaleSelector.qml</file>
+        <file>PageSettings.qml</file>
+        <file>icons/sawtooth.png</file>
+        <file>icons/sine.png</file>
+        <file>icons/triangle.png</file>
+        <file>icons/wavetable.png</file>
+        <file>main.qml</file>
+        <file>qtquickcontrols2.conf</file>
+        <file>components/MidiChannel.qml</file>
+        <file>components/Oscillator1.qml</file>
+        <file>components/Wavetable.qml</file>
+        <file>components/OscillatorMode.qml</file>
+        <file>components/TabWordList.qml</file>
+        <file>components/Util.qml</file>
+        <file>components/TapTimeButton.qml</file>
+        <file>components/VertTabBar.qml</file>
+        <file>fonts/NimbusSanL-Regu.ttf</file>
+        <file>components/RoundPane.qml</file>
+        <file>components/LabeledPane.qml</file>
+        <file>components/Osc2FilterEnable.qml</file>
+        <file>components/Osc2FilterMode.qml</file>
+        <file>PageSettingsApp.qml</file>
+        <file>components/SectionLabel.qml</file>
+        <file>PageSettingsInformation.qml</file>
+        <file>PageSettingsMIDI.qml</file>
+        <file>PageSettingsGlobal.qml</file>
+        <file>PageSettingsAppMIDI.qml</file>
+    </qresource>
+    <qresource prefix="/components"/>
+    <qresource prefix="/pages"/>
+</RCC>

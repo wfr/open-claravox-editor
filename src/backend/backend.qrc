@@ -1,0 +1,67 @@
+<RCC>
+    <qresource prefix="/backend">
+        <file>factory-presets/Afterburn.mpr</file>
+        <file>factory-presets/AirVox.mpr</file>
+        <file>factory-presets/Alibi.mpr</file>
+        <file>factory-presets/Alien Lights.mpr</file>
+        <file>factory-presets/Ball of Light.mpr</file>
+        <file>factory-presets/Bellecho.mpr</file>
+        <file>factory-presets/Bright Shift.mpr</file>
+        <file>factory-presets/Burning Waves.mpr</file>
+        <file>factory-presets/Cave Dweller.mpr</file>
+        <file>factory-presets/Clair de Lune.mpr</file>
+        <file>factory-presets/Clara 1969.mpr</file>
+        <file>factory-presets/Classic.mpr</file>
+        <file>factory-presets/Cloudy Vista.mpr</file>
+        <file>factory-presets/Deep Dive.mpr</file>
+        <file>factory-presets/Double Tracker.mpr</file>
+        <file>factory-presets/Dream Sequence.mpr</file>
+        <file>factory-presets/Enveloped.mpr</file>
+        <file>factory-presets/Ghostly.mpr</file>
+        <file>factory-presets/Glass Resonators.mpr</file>
+        <file>factory-presets/Grinding Gears.mpr</file>
+        <file>factory-presets/Growly.mpr</file>
+        <file>factory-presets/Harmonic Choir.mpr</file>
+        <file>factory-presets/HollowVox.mpr</file>
+        <file>factory-presets/Incandescent.mpr</file>
+        <file>factory-presets/Initial Preset.mpr</file>
+        <file>factory-presets/Let me sing please.mpr</file>
+        <file>factory-presets/Loosing Track.mpr</file>
+        <file>factory-presets/Louis and Bebe.mpr</file>
+        <file>factory-presets/Low Orbits.mpr</file>
+        <file>factory-presets/Lucky Human.mpr</file>
+        <file>factory-presets/ModuTonal.mpr</file>
+        <file>factory-presets/Morricone Harmon.mpr</file>
+        <file>factory-presets/Mr Spacely.mpr</file>
+        <file>factory-presets/Mystery Mile.mpr</file>
+        <file>factory-presets/Nautical.mpr</file>
+        <file>factory-presets/Noise Galaxy.mpr</file>
+        <file>factory-presets/Noise Swash.mpr</file>
+        <file>factory-presets/Other Roomly.mpr</file>
+        <file>factory-presets/Overture.mpr</file>
+        <file>factory-presets/PitchMod.mpr</file>
+        <file>factory-presets/Pumped Texture.mpr</file>
+        <file>factory-presets/Singing Sparkles.mpr</file>
+        <file>factory-presets/SkySong.mpr</file>
+        <file>factory-presets/Slow Phases.mpr</file>
+        <file>factory-presets/Solo Duo.mpr</file>
+        <file>factory-presets/So Softly.mpr</file>
+        <file>factory-presets/Space Station.mpr</file>
+        <file>factory-presets/Spectral Wheel.mpr</file>
+        <file>factory-presets/Spectrum.mpr</file>
+        <file>factory-presets/Sub Orbital.mpr</file>
+        <file>factory-presets/Tango.mpr</file>
+        <file>factory-presets/Tastes Like Cello.mpr</file>
+        <file>factory-presets/This Sounds Vintage.mpr</file>
+        <file>factory-presets/Tiny Entity.mpr</file>
+        <file>factory-presets/Tundra.mpr</file>
+        <file>factory-presets/Vibranium.mpr</file>
+        <file>factory-presets/VibraVox.mpr</file>
+        <file>factory-presets/Vocal Formant.mpr</file>
+        <file>factory-presets/WaterPhone.mpr</file>
+        <file>factory-presets/Whistle in the wind.mpr</file>
+    </qresource>
+    <qresource prefix="/">
+        <file>CHANGELOG.md</file>
+    </qresource>
+</RCC>

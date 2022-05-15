@@ -32,6 +32,7 @@
         <file>PageSettingsMIDI.qml</file>
         <file>PageSettingsGlobal.qml</file>
         <file>PageSettingsAppMIDI.qml</file>
+        <file>PageEditorContents.qml</file>
     </qresource>
     <qresource prefix="/components"/>
     <qresource prefix="/pages"/>

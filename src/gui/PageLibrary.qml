@@ -215,8 +215,8 @@ Item {
 
                 maximumFlickVelocity: 800
 
-                boundsMovement: Flickable.StopAtBounds
-                boundsBehavior: Flickable.DragOverBounds
+//                boundsMovement: Flickable.StopAtBounds
+//                boundsBehavior: Flickable.DragOverBounds
 
                 ScrollBar.vertical: ScrollBar {
                     id: scrollBar

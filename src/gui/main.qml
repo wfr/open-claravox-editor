@@ -7,8 +7,6 @@ import QtQuick.Controls 2.15
 import QtQuick.Controls.Material 2.15
 import QtQuick.Layouts 1.12
 import QtQml.Models 2.12
-//import QtQuick.Dialogs 1.3
-import Qt.labs.platform 1.1
 
 import "components"
 import Claravox.Backend 1.0
@@ -28,21 +26,25 @@ ApplicationWindow {
 //    Material.accent: "#0f0" // TODO: make configurable
     Material.accent: Backend.uiAccentColor
 
-    MessageDialog {
-        id: messageDialogWarningUnsaved
+    Dialog {
+        id: unsavedWarningDialog
+        modal: true
         title: "WARNING"
-        text: "Changing presets will cause any unsaved changes to be lost. This cannot be undone."
-//        icon: StandardIcon.Warning
-        buttons: StandardButton.Discard | StandardButton.Cancel
+        standardButtons: Dialog.Ok | Dialog.Cancel
+        Component.onCompleted: visible = false
+        x: (parent.width - width) / 2
+        y: (parent.height - height) / 2
         property var discard_func
+        Text {
+            text: "Changing presets will cause any unsaved changes to be lost. This cannot be undone."
+        }
         onRejected: {
             close()
         }
-        onDiscardClicked: {
+        onAccepted: {
             close()
             discard_func()
         }
-        Component.onCompleted: visible = false
     }
 
     // https://doc.qt.io/qt-5/qml-qtquick-controls2-toolbar.html
@@ -99,10 +101,10 @@ ApplicationWindow {
                 font.pixelSize: 18
                 onPressed: {
                     if (Backend.currentPresetModified) {
-                        messageDialogWarningUnsaved.discard_func = () => {
+                        unsavedWarningDialog.discard_func = () => {
                             comboBoxPreset.decrement();
                         }
-                        messageDialogWarningUnsaved.open();
+                        unsavedWarningDialog.open();
                     } else {
                         comboBoxPreset.decrement();
                     }
@@ -113,10 +115,10 @@ ApplicationWindow {
                 font.pixelSize: 18
                 onPressed: {
                     if (Backend.currentPresetModified) {
-                        messageDialogWarningUnsaved.discard_func = () => {
+                        unsavedWarningDialog.discard_func = () => {
                             comboBoxPreset.increment();
                         }
-                        messageDialogWarningUnsaved.open();
+                        unsavedWarningDialog.open();
                     } else {
                         comboBoxPreset.increment();
                     }

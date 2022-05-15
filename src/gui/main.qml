@@ -97,9 +97,10 @@ ApplicationWindow {
             }
 
             Button {
+                id: buttonPrev
                 text: "<"
                 font.pixelSize: 18
-                onPressed: {
+                onClicked: {
                     if (Backend.currentPresetModified) {
                         unsavedWarningDialog.discard_func = () => {
                             comboBoxPreset.decrement();
@@ -111,9 +112,10 @@ ApplicationWindow {
                 }
             }
             Button {
+                id: buttonNext
                 text: ">"
                 font.pixelSize: 18
-                onPressed: {
+                onClicked: {
                     if (Backend.currentPresetModified) {
                         unsavedWarningDialog.discard_func = () => {
                             comboBoxPreset.increment();
@@ -126,17 +128,29 @@ ApplicationWindow {
             }
 
             TabButton {
+                id: tabButton0
                 text: qsTr("Editor")
                 onClicked: stackLayout.currentIndex = 0
                 checked: true
+                ToolTip.text: "Alt+1"
+                ToolTip.visible: hovered
+                ToolTip.delay: 1000
             }
             TabButton {
+                id: tabButton1
                 text: qsTr("Library")
                 onClicked: stackLayout.currentIndex = 1
+                ToolTip.text: "Alt+2"
+                ToolTip.visible: hovered
+                ToolTip.delay: 1000
             }
             TabButton {
+                id: tabButton2
                 text: qsTr("Settings")
                 onClicked: stackLayout.currentIndex = 2
+                ToolTip.text: "Alt+3"
+                ToolTip.visible: hovered
+                ToolTip.delay: 1000
             }
 
 //            Label {
@@ -160,15 +174,39 @@ ApplicationWindow {
         }
     }
 
-//    PageIndicator {
-//        id: indicator
-
-//        count: stackLayout.count
-//        currentIndex: stackLayout.currentIndex
-
-//            anchors.bottom: parent.bottom
-//            anchors.horizontalCenter: parent.horizontalCenter
-//    }
+    Shortcut {
+        sequence: "Left"
+        onActivated: {
+            buttonPrev.clicked()
+        }
+    }
+    Shortcut {
+        sequence: "Right"
+        onActivated: {
+            buttonNext.clicked()
+        }
+    }
+    Shortcut {
+        sequence: "Alt+1"
+        onActivated: {
+            tabButton0.checked = true
+            tabButton0.clicked()
+        }
+    }
+    Shortcut {
+        sequence: "Alt+2"
+        onActivated: {
+            tabButton1.checked = true
+            tabButton1.clicked()
+        }
+    }
+    Shortcut {
+        sequence: "Alt+3"
+        onActivated: {
+            tabButton2.checked = true
+            tabButton2.clicked()
+        }
+    }
 }
 
 /*##^##

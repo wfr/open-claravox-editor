@@ -204,35 +204,39 @@ Item {
             Material.elevation: 4
             Layout.preferredHeight: roundPaneTopLeft.height
             Layout.alignment: Qt.AlignTop
-            ScrollView {
+            width: 280
+            contentWidth: 280
+
+            Flickable {
                 clip: true
                 Layout.preferredWidth: 280
                 width: 280
-                height: parent.height - 12
-                rightPadding: 24
-                ScrollBar.vertical.policy: ScrollBar.AlwaysOn
+                contentWidth: 280
+                height: parent.height
+                contentHeight: columnLayoutTR.childrenRect.height
 
-                // The overshoot/bounce of ScrollViews is annoying.
-                // Maybe replace it with a Flickable (boundsBehavior),
-                // as we did in most other scrollable components .
+                maximumFlickVelocity: 800
 
-                // disable annoying bounce
-//                boundsMovement: Flickable.StopAtBounds
-//                boundsBehavior: Flickable.DragOverBounds
+                boundsMovement: Flickable.StopAtBounds
+                boundsBehavior: Flickable.DragOverBounds
 
-                // add ScrollBar to Flickable
-//                Keys.onUpPressed: scrollBar.decrease()
-//                Keys.onDownPressed: scrollBar.increase()
-//                ScrollBar.vertical: ScrollBar { id: scrollBar }
+                ScrollBar.vertical: ScrollBar {
+                    id: scrollBar
+                    policy: ScrollBar.AlwaysOn
+                }
+                Keys.onUpPressed: scrollBar.decrease()
+                Keys.onDownPressed: scrollBar.increase()
 
                 ColumnLayout {
+                    id: columnLayoutTR
                     Layout.alignment: Qt.AlignTop
-                    Layout.preferredWidth: 280
-
+                    Layout.preferredWidth: 248
+                    width: 248
 
                     Button {
                         text: "Favorite"
                         checkable: true
+                        Layout.fillWidth: true
                     }
 
                     SectionLabel {
@@ -277,7 +281,7 @@ Item {
                         }
                     }
                 }
-            } // ScrollView
+            } // Flickable
         } // RoundPane
 
         // -------------- Bottom --------------

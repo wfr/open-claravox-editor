@@ -8,6 +8,7 @@
 #include <QTimer>
 #include <QLoggingCategory>
 #include <QMap>
+#include <QScreen>
 
 #include <deque>
 #include <chrono>
@@ -60,6 +61,10 @@ int main(int argc, char *argv[])
     QApplication app(argc, argv);
     QQmlApplicationEngine engine;
     installDefaultFont();
+
+    auto screen = QGuiApplication::primaryScreen();
+    const qreal dpi = screen->logicalDotsPerInch();
+    qDebug() << "Primary screen DPI = " << dpi;
 
     Backend* backend = new Backend();
 

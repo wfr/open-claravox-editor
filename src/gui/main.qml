@@ -2,13 +2,13 @@
 // SPDX-FileCopyrightText: 2022 Wolfgang Frisch
 import QtQuick 2.12
 import QtQuick.Window 2.12
-import QtQuick.Controls 2.12
-import QtQuick.Extras 1.4
+import QtQuick.Controls 2.15
+//import QtQuick.Extras 1.4
 import QtQuick.Controls.Material 2.15
-import QtQuick.Controls.Imagine 2.15
 import QtQuick.Layouts 1.12
 import QtQml.Models 2.12
-import QtQuick.Dialogs 1.3
+//import QtQuick.Dialogs 1.3
+import Qt.labs.platform 1.1
 
 import "components"
 import Claravox.BackEnd 1.0
@@ -32,13 +32,13 @@ ApplicationWindow {
         id: messageDialogWarningUnsaved
         title: "WARNING"
         text: "Changing presets will cause any unsaved changes to be lost. This cannot be undone."
-        icon: StandardIcon.Warning
-        standardButtons: StandardButton.Discard | StandardButton.Cancel
+//        icon: StandardIcon.Warning
+        buttons: StandardButton.Discard | StandardButton.Cancel
         property var discard_func
         onRejected: {
             close()
         }
-        onDiscard: {
+        onDiscardClicked: {
             close()
             discard_func()
         }

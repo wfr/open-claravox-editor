@@ -75,7 +75,7 @@ BackEnd::BackEnd(QObject *parent) :
 
 
 QString BackEnd::presetsPath() {
-    QString config_path = QStandardPaths::writableLocation(QStandardPaths::DataLocation);
+    QString config_path = QStandardPaths::writableLocation(QStandardPaths::ConfigLocation);
     QString presets_path = QDir(config_path).filePath("Presets");
     if (!QDir(presets_path).exists()) {
         if (!QDir().mkpath(presets_path)) {

@@ -4,7 +4,6 @@ import QtQuick 2.15
 import QtQuick.Controls 2.15
 import QtQuick.Layouts 1.15
 import QtQuick.Controls.Material 2.15
-import QtQuick.Controls.Imagine 2.15
 
 /* Labeled slider with value/unit displays
    which can be customized by overriding renderValue() and renderUnits().

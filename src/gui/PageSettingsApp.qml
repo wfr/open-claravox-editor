@@ -13,7 +13,7 @@ import Qt.labs.qmlmodels 1.0
 import Qt.labs.platform
 
 import "components"
-import Claravox.BackEnd 1.0
+import Claravox.Backend 1.0
 
 Item {
     width: 800
@@ -27,7 +27,7 @@ Item {
         }
         onAccepted: {
             window.Material.accent = colorDialog.color;
-            BackEnd.uiAccentColor = colorDialog.color;
+            Backend.uiAccentColor = colorDialog.color;
         }
         onRejected: {
             window.Material.accent = colorDialog.color

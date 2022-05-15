@@ -16,7 +16,7 @@ find_package(PkgConfig REQUIRED)
 pkg_check_modules(RTMIDI REQUIRED rtmidi)
 
 add_library(claravox-backend STATIC
-    BackEnd.cpp
+    Backend.cpp
     Claravox.cpp
     MIDIMessage.cpp
     MIDIParameter.cpp
@@ -28,7 +28,7 @@ add_library(claravox-backend STATIC
     FilteredPresetListModel.cpp
     Util.cpp
     
-    BackEnd.h
+    Backend.h
     Claravox.h
     MIDIMessage.h
     MIDIParameter.h

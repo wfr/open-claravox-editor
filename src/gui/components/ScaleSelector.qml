@@ -22,7 +22,7 @@ Item {
 
     // Scales in the Claravox' internal order.
     //
-    // We could read this list at runtime from the BackEnd instead,
+    // We could read this list at runtime from the Backend instead,
     // but then we would lose the ability to test this UI component in isolation.
     // The firmware has this list hardcoded anyway, and it's very unlikely to change.
     readonly property var names: [

@@ -9,7 +9,7 @@ import QtQuick.Layouts 1.0
 import QtQml.Models 2.15
 import Qt.labs.qmlmodels 1.0
 
-import Claravox.BackEnd 1.0
+import Claravox.Backend 1.0
 
 import "components"
 
@@ -100,9 +100,9 @@ Item {
 
                 ListView {
                     id: presetListView
-                    model: BackEnd.presets
-                    // model: BackEnd.filteredPresets
-                    currentIndex: BackEnd.currentPresetIndex
+                    model: Backend.presets
+                    // model: Backend.filteredPresets
+                    currentIndex: Backend.currentPresetIndex
 
                     topMargin: 0
                     // Ugly layout
@@ -160,9 +160,9 @@ Item {
                         MouseArea {
                             anchors.fill: parent
                             onClicked: {
-                                let preset = BackEnd.presets.byIndex(index);
+                                let preset = Backend.presets.byIndex(index);
                                 console.log("clicked preset", index, preset.name);
-                                BackEnd.selectPreset(preset.name);
+                                Backend.selectPreset(preset.name);
                             }
                         }
                     }
@@ -245,7 +245,7 @@ Item {
                         Layout.minimumWidth: 250
                         spacing: 0
                         Repeater {
-                            model: BackEnd.groups
+                            model: Backend.groups
                             Button {
                                 text: model.group
                                 Layout.fillWidth: true
@@ -264,7 +264,7 @@ Item {
                         columns: 2
                         rowSpacing: 0
                         Repeater {
-                            model: BackEnd.tags
+                            model: Backend.tags
                             Button {
                                 text: model.tag
                                 Layout.fillWidth: true
@@ -304,16 +304,16 @@ Item {
                         RowLayout {
                             Layout.columnSpan: 2
                             TextInput {
-                                text: BackEnd.currentPreset.name
+                                text: Backend.currentPreset.name
                                 font.pointSize: 16
                                 color: Material.primaryTextColor
                                 onAccepted: {
-                                    BackEnd.renameCurrentPreset(text);
+                                    Backend.renameCurrentPreset(text);
                                 }
                             }
                             Button {
                                 text: "Edit"
-            //                    visible: !BackEnd.currentPreset.isFactory
+            //                    visible: !Backend.currentPreset.isFactory
                             }
                         }
                     }
@@ -323,7 +323,7 @@ Item {
                             text: "Save Date"
                         }
                         Text {
-                            text: BackEnd.currentPreset.lastModified
+                            text: Backend.currentPreset.lastModified
                             color: Material.primaryTextColor
                         }
                     }
@@ -332,7 +332,7 @@ Item {
                             text: "Group"
                         }
                         Text {
-                            text: BackEnd.currentPreset.group
+                            text: Backend.currentPreset.group
                             color: Material.primaryTextColor
                         }
                     }
@@ -340,13 +340,13 @@ Item {
                         Button {
                             text: "Favorite"
                             onPressed: {
-                                BackEnd.presets.toggleFavorite(BackEnd.currentPreset.name);
+                                Backend.presets.toggleFavorite(Backend.currentPreset.name);
                             }
                         }
                         Button {
                             text: "Open folder"
                             onClicked: {
-                                Qt.openUrlExternally(BackEnd.presetsFolderURL());
+                                Qt.openUrlExternally(Backend.presetsFolderURL());
                             }
                         }
                         Button {
@@ -363,7 +363,7 @@ Item {
                         text: "Tags"
                     }
                     Repeater {
-                        model: BackEnd.currentPreset.tagList
+                        model: Backend.currentPreset.tagList
                         Button {
                             text: model.display
                             Layout.fillWidth: true

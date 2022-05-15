@@ -10,7 +10,7 @@ import QtQml.Models 2.15
 
 import "components"
 
-import Claravox.BackEnd 1.0
+import Claravox.Backend 1.0
 
 Item {
     width: 1400
@@ -72,8 +72,8 @@ Item {
                         function renderValue() {
                             return Number(_interpolate(value, from, to, 0, 100)).toFixed(0);
                         }
-                        value: BackEnd.params.volCurveVal
-                        onValueChanged: BackEnd.params.volCurveVal = value
+                        value: Backend.params.volCurveVal
+                        onValueChanged: Backend.params.volCurveVal = value
                     }
 
                     LabeledSlider {
@@ -83,8 +83,8 @@ Item {
                         function renderValue() {
                             return Number(_interpolate(value, from, to, 0, 100)).toFixed(0);
                         }
-                        value: BackEnd.params.pitchCurveVal
-                        onValueChanged: BackEnd.params.pitchCurveVal = value
+                        value: Backend.params.pitchCurveVal
+                        onValueChanged: Backend.params.pitchCurveVal = value
                     }
                 }
             }
@@ -104,8 +104,8 @@ Item {
                         function renderValue() {
                             return Number(_interpolate(value, from, to, 0, 100)).toFixed(0);
                         }
-                        value: BackEnd.params.quantizeAmount
-                        onValueChanged: BackEnd.params.quantizeAmount = value
+                        value: Backend.params.quantizeAmount
+                        onValueChanged: Backend.params.quantizeAmount = value
                     }
 
                     LabeledSlider {
@@ -115,8 +115,8 @@ Item {
                         to: 11
                         stepSize: 1
                         description: "Root"
-                        value: denormalize(BackEnd.params.rootVal)
-                        onValueChanged: BackEnd.params.rootVal = normalize(value)
+                        value: denormalize(Backend.params.rootVal)
+                        onValueChanged: Backend.params.rootVal = normalize(value)
 
                         function renderValue() {
                             let note = Math.round(this.value);
@@ -162,9 +162,9 @@ Item {
                     y: 0
                     ScaleSelector {
                         id: scaleSelector
-                        scaleVal: BackEnd.params.scaleVal
+                        scaleVal: Backend.params.scaleVal
                         onScaleSelected: (v) => {
-                             BackEnd.params.scaleVal = v;
+                             Backend.params.scaleVal = v;
                          }
                     }
                 }
@@ -182,9 +182,9 @@ Item {
                     Register {
                         id: registerSelector
                         Layout.alignment: Qt.AlignLeft | Qt.AlignTop
-                        value: BackEnd.params.octaveState
+                        value: Backend.params.octaveState
                         // custom signal to avoid breaking bindings:
-                        onValueSelected: (v) => { BackEnd.params.octaveState = v };
+                        onValueSelected: (v) => { Backend.params.octaveState = v };
                     }
 
                     LabeledSlider {
@@ -193,7 +193,7 @@ Item {
                         unit: ""
                         function renderValue() {
                             let trigger_binding = value; // dummy
-                            let hz = BackEnd.params.getFilterValHz();
+                            let hz = Backend.params.getFilterValHz();
                             if (hz < 999.5) {
                                 return Number(hz).toFixed(0);
                             } else {
@@ -202,15 +202,15 @@ Item {
                         }
                         function renderUnit() {
                             let trigger_binding = value; // dummy
-                            let hz = BackEnd.params.getFilterValHz();
+                            let hz = Backend.params.getFilterValHz();
                             if (hz < 999.5) {
                                 return "Hz";
                             } else {
                                 return "kHz";
                             }
                         }
-                        value: BackEnd.params.filterVal
-                        onValueChanged: BackEnd.params.filterVal = value
+                        value: Backend.params.filterVal
+                        onValueChanged: Backend.params.filterVal = value
                     }
 
                     LabeledSlider {
@@ -220,8 +220,8 @@ Item {
                         function renderValue() {
                             return Number(_interpolate(value, from, to, 0, 100)).toFixed(0);
                         }
-                        value: BackEnd.params.brightVal
-                        onValueChanged: BackEnd.params.brightVal = value
+                        value: Backend.params.brightVal
+                        onValueChanged: Backend.params.brightVal = value
                     }
 
                     LabeledSlider {
@@ -232,8 +232,8 @@ Item {
                         function renderValue() {
                             return Number(_interpolate(value, from, to, 0, 100)).toFixed(0);
                         }
-                        value: BackEnd.params.waveVal
-                        onValueChanged: BackEnd.params.waveVal = value
+                        value: Backend.params.waveVal
+                        onValueChanged: Backend.params.waveVal = value
                     }
                 }
 
@@ -260,8 +260,8 @@ Item {
                             let ms = _interpolate(value, from, to, 70, 700);
                             return Number(ms).toFixed(0);
                         }
-                        value: BackEnd.params.timeVal
-                        onValueChanged: BackEnd.params.timeVal = value
+                        value: Backend.params.timeVal
+                        onValueChanged: Backend.params.timeVal = value
                     }
 
                     LabeledSlider {
@@ -272,14 +272,14 @@ Item {
                             let pct = _interpolate(value, from, to, 0, 100);
                             return Number(pct).toFixed(0);
                         }
-                        value: BackEnd.params.delayAmount
-                        onValueChanged: BackEnd.params.delayAmount = value
+                        value: Backend.params.delayAmount
+                        onValueChanged: Backend.params.delayAmount = value
                     }
 
                     TapTimeButton {
                         onMeasured: (delta) => {
                             let time = Math.max(70, Math.min(700, Math.round(delta)));
-                            BackEnd.params.timeVal = _interpolate(time, 70, 700, 0.0, 1.0);
+                            Backend.params.timeVal = _interpolate(time, 70, 700, 0.0, 1.0);
                         }
                     }
 
@@ -291,8 +291,8 @@ Item {
                             let pct = _interpolate(value, from, to, 0, 100);
                             return Number(pct).toFixed(0);
                         }
-                        value: BackEnd.params.feedbackVal
-                        onValueChanged: BackEnd.params.feedbackVal = value
+                        value: Backend.params.feedbackVal
+                        onValueChanged: Backend.params.feedbackVal = value
                     }
                 }
             }
@@ -313,8 +313,8 @@ Item {
                         function renderValue() {
                             return Number(_interpolate(value, from, to, -100, 100)).toFixed(0);
                         }
-                        value: BackEnd.params.pitchModWsFreq
-                        onValueChanged: BackEnd.params.pitchModWsFreq = value
+                        value: Backend.params.pitchModWsFreq
+                        onValueChanged: Backend.params.pitchModWsFreq = value
                     }
                     LabeledSlider {
                         id: sliderPitchModWsAmount
@@ -323,8 +323,8 @@ Item {
                         function renderValue() {
                             return Number(_interpolate(value, from, to, -100, 100)).toFixed(0);
                         }
-                        value: BackEnd.params.pitchModWsAmount
-                        onValueChanged: BackEnd.params.pitchModWsAmount = value
+                        value: Backend.params.pitchModWsAmount
+                        onValueChanged: Backend.params.pitchModWsAmount = value
                     }
                 }
             }
@@ -335,10 +335,10 @@ Item {
                 title: qsTr("Oscillator 1")
                 Oscillator1 {
                     id: osc1
-                    level: BackEnd.params.osc1Level
-                    onLevelChanged: BackEnd.params.osc1Level = level
-                    type: BackEnd.params.osc1Type
-                    onTypeChanged: BackEnd.params.osc1Type = type
+                    level: Backend.params.osc1Level
+                    onLevelChanged: Backend.params.osc1Level = level
+                    type: Backend.params.osc1Type
+                    onTypeChanged: Backend.params.osc1Type = type
                 }
             }
 
@@ -347,14 +347,14 @@ Item {
                 title: qsTr("Oscillator 1 Wavetable")
                 Wavetable {
                     id: osc1wavetable
-                    wavetable: BackEnd.params.osc1Wavetable
-                    onWavetableSelected: (v) => { BackEnd.params.osc1Wavetable = v };
-                    scanFreq: BackEnd.params.osc1ScanFreq
-                    onScanFreqChanged: BackEnd.params.osc1ScanFreq = scanFreq
-                    scanPos: BackEnd.params.osc1ScanPos
-                    onScanPosChanged: BackEnd.params.osc1ScanPos = scanPos
-                    scanAmount: BackEnd.params.osc1ScanAmount
-                    onScanAmountChanged: BackEnd.params.osc1ScanAmount = scanAmount
+                    wavetable: Backend.params.osc1Wavetable
+                    onWavetableSelected: (v) => { Backend.params.osc1Wavetable = v };
+                    scanFreq: Backend.params.osc1ScanFreq
+                    onScanFreqChanged: Backend.params.osc1ScanFreq = scanFreq
+                    scanPos: Backend.params.osc1ScanPos
+                    onScanPosChanged: Backend.params.osc1ScanPos = scanPos
+                    scanAmount: Backend.params.osc1ScanAmount
+                    onScanAmountChanged: Backend.params.osc1ScanAmount = scanAmount
                 }
             }
 
@@ -363,14 +363,14 @@ Item {
                 title: qsTr("Oscillator 2")
                 Oscillator2 {
                     id: osc2
-                    level: BackEnd.params.osc2Level
-                    onLevelChanged: BackEnd.params.osc2Level = level
-                    type: BackEnd.params.osc2Type
-                    onTypeChanged: BackEnd.params.osc2Type = type
-                    beat: BackEnd.params.osc2Beat
-                    onBeatChanged: BackEnd.params.osc2Beat = beat
-                    noiseLevel: BackEnd.params.noiseLevel
-                    onNoiseLevelChanged: BackEnd.params.noiseLevel = noiseLevel
+                    level: Backend.params.osc2Level
+                    onLevelChanged: Backend.params.osc2Level = level
+                    type: Backend.params.osc2Type
+                    onTypeChanged: Backend.params.osc2Type = type
+                    beat: Backend.params.osc2Beat
+                    onBeatChanged: Backend.params.osc2Beat = beat
+                    noiseLevel: Backend.params.noiseLevel
+                    onNoiseLevelChanged: Backend.params.noiseLevel = noiseLevel
                 }
             }
 
@@ -379,14 +379,14 @@ Item {
                 title: qsTr("Oscillator 2 Wavetable")
                 Wavetable {
                     id: osc2wavetable
-                    wavetable: BackEnd.params.osc2Wavetable
-                    onWavetableSelected: (v) => { BackEnd.params.osc2Wavetable = v };
-                    scanFreq: BackEnd.params.osc2ScanFreq
-                    onScanFreqChanged: BackEnd.params.osc2ScanFreq = scanFreq
-                    scanPos: BackEnd.params.osc2ScanPos
-                    onScanPosChanged: BackEnd.params.osc2ScanPos = scanPos
-                    scanAmount: BackEnd.params.osc2ScanAmount
-                    onScanAmountChanged: BackEnd.params.osc2ScanAmount = scanAmount
+                    wavetable: Backend.params.osc2Wavetable
+                    onWavetableSelected: (v) => { Backend.params.osc2Wavetable = v };
+                    scanFreq: Backend.params.osc2ScanFreq
+                    onScanFreqChanged: Backend.params.osc2ScanFreq = scanFreq
+                    scanPos: Backend.params.osc2ScanPos
+                    onScanPosChanged: Backend.params.osc2ScanPos = scanPos
+                    scanAmount: Backend.params.osc2ScanAmount
+                    onScanAmountChanged: Backend.params.osc2ScanAmount = scanAmount
                 }
             }
 
@@ -401,11 +401,11 @@ Item {
                     LabeledSlider {
                         id: sliderPitchOsc2FilterFreq
                         description: "Filter Offset"
-                        value: BackEnd.params.osc2FilterFreq
+                        value: Backend.params.osc2FilterFreq
                         unit: "Hz"
                         function renderValue() {
                             let trigger_binding = value; // dummy
-                            let hz = BackEnd.params.getOsc2FilterFreqHz();
+                            let hz = Backend.params.getOsc2FilterFreqHz();
                             if (Math.abs(hz) < 999.5) {
                                 return Number(hz).toFixed(0);
                             } else {
@@ -414,29 +414,29 @@ Item {
                         }
                         function renderUnit() {
                             let trigger_binding = value; // dummy
-                            let hz = BackEnd.params.getOsc2FilterFreqHz();
+                            let hz = Backend.params.getOsc2FilterFreqHz();
                             if (Math.abs(hz) < 999.5) {
                                 return "Hz";
                             } else {
                                 return "kHz";
                             }
                         }
-                        onValueChanged: BackEnd.params.osc2FilterFreq = value
+                        onValueChanged: Backend.params.osc2FilterFreq = value
                     }
 
                     Osc2FilterMode {
                         id: osc2FilterModeSelector
                         Layout.alignment: Qt.AlignLeft | Qt.AlignTop
-                        value: BackEnd.params.osc2FilterMode
+                        value: Backend.params.osc2FilterMode
                         // custom signal to avoid breaking bindings:
-                        onValueSelected: (v) => { BackEnd.params.osc2FilterMode = v };
+                        onValueSelected: (v) => { Backend.params.osc2FilterMode = v };
                     }
 
                     LabeledSlider {
                         id: sliderPitchOsc2FilterRes
                         description: "Resonance"
-                        value: BackEnd.params.osc2FilterRes
-                        onValueChanged: BackEnd.params.osc2FilterRes = value
+                        value: Backend.params.osc2FilterRes
+                        onValueChanged: Backend.params.osc2FilterRes = value
                         unit: "%"
                         function renderValue() {
                             return Number(_interpolate(value, from, to, 0, 100)).toFixed(0);
@@ -446,9 +446,9 @@ Item {
                     Osc2FilterEnable {
                         id: osc2FilterEnableSelector
                         Layout.alignment: Qt.AlignLeft | Qt.AlignTop
-                        value: BackEnd.params.osc2FilterEnable
+                        value: Backend.params.osc2FilterEnable
                         // custom signal to avoid breaking bindings:
-                        onValueSelected: (v) => { BackEnd.params.osc2FilterEnable = v };
+                        onValueSelected: (v) => { Backend.params.osc2FilterEnable = v };
                     }
                 }
             }
@@ -465,8 +465,8 @@ Item {
                         LabeledSlider {
                             id: sliderPitchFilterOsc1
                             Layout.columnSpan: 1
-                            value: BackEnd.params.osc1FilterPitchAmount
-                            onValueChanged: BackEnd.params.osc1FilterPitchAmount = value
+                            value: Backend.params.osc1FilterPitchAmount
+                            onValueChanged: Backend.params.osc1FilterPitchAmount = value
                             unit: "%"
                             description: "Osc 1"
                             function renderValue() {
@@ -477,8 +477,8 @@ Item {
                         LabeledSlider {
                             id: sliderPitchFilterOsc2
                             Layout.columnSpan: 1
-                            value: BackEnd.params.osc2FilterPitchAmount
-                            onValueChanged: BackEnd.params.osc2FilterPitchAmount = value
+                            value: Backend.params.osc2FilterPitchAmount
+                            onValueChanged: Backend.params.osc2FilterPitchAmount = value
                             unit: "%"
                             description: "Osc 2"
                             function renderValue() {
@@ -499,8 +499,8 @@ Item {
                         LabeledSlider {
                             id: sliderVolFilterOsc1
                             Layout.columnSpan: 1
-                            value: BackEnd.params.osc1FilterVolumeAmount
-                            onValueChanged: BackEnd.params.osc1FilterVolumeAmount = value
+                            value: Backend.params.osc1FilterVolumeAmount
+                            onValueChanged: Backend.params.osc1FilterVolumeAmount = value
                             unit: "%"
                             description: "Osc 1"
                             function renderValue() {
@@ -511,8 +511,8 @@ Item {
                         LabeledSlider {
                             id: sliderVolFilterOsc2
                             Layout.columnSpan: 1
-                            value: BackEnd.params.osc2FilterVolumeAmount
-                            onValueChanged: BackEnd.params.osc2FilterVolumeAmount = value
+                            value: Backend.params.osc2FilterVolumeAmount
+                            onValueChanged: Backend.params.osc2FilterVolumeAmount = value
                             unit: "%"
                             description: "Osc 2"
                             function renderValue() {

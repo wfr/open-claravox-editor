@@ -14,7 +14,7 @@ import Qt.labs.platform
 
 import "components"
 
-import Claravox.BackEnd 1.0
+import Claravox.Backend 1.0
 
 // Global
 GridLayout {

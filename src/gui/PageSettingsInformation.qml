@@ -14,7 +14,7 @@ import Qt.labs.platform
 
 import "components"
 
-import Claravox.BackEnd 1.0
+import Claravox.Backend 1.0
 
 Item {
     id: item1
@@ -94,7 +94,7 @@ Item {
                     bottomPadding: 0
                     rightPadding: 24
                     background: null
-                    text: BackEnd.appChangelog()
+                    text: Backend.appChangelog()
                     textFormat: Text.MarkdownText
                 }
             }

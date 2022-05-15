@@ -11,7 +11,7 @@ import QtQml.Models 2.12
 import Qt.labs.platform 1.1
 
 import "components"
-import Claravox.BackEnd 1.0
+import Claravox.Backend 1.0
 
 ApplicationWindow {
     id: window
@@ -26,7 +26,7 @@ ApplicationWindow {
 
     color: "#f0f0f0"
 //    Material.accent: "#0f0" // TODO: make configurable
-    Material.accent: BackEnd.uiAccentColor
+    Material.accent: Backend.uiAccentColor
 
     MessageDialog {
         id: messageDialogWarningUnsaved
@@ -56,24 +56,24 @@ ApplicationWindow {
             ToolButton {
                 text: qsTr("SAVE")
                 onClicked: {
-                    BackEnd.saveCurrentPreset()
+                    Backend.saveCurrentPreset()
                 }
             }
 
             ComboBox {
                 id: comboBoxPreset
                 Layout.fillWidth: true
-                model: BackEnd.presets
-                currentIndex: BackEnd.currentPresetIndex
+                model: Backend.presets
+                currentIndex: Backend.currentPresetIndex
                 textRole: "name"
-                displayText: currentText + (BackEnd.currentPresetModified ? " *" : "")
-//                font.italic: BackEnd.currentPresetModified
+                displayText: currentText + (Backend.currentPresetModified ? " *" : "")
+//                font.italic: Backend.currentPresetModified
                 font.pointSize: 12
                 onCurrentIndexChanged: {
                     console.log("Selected preset index", currentIndex);
-                    let name = BackEnd.presets.byIndex(currentIndex).name;
+                    let name = Backend.presets.byIndex(currentIndex).name;
                     if (name.length > 0) {
-                        BackEnd.selectPreset(name);
+                        Backend.selectPreset(name);
                     }
                 }
 
@@ -98,7 +98,7 @@ ApplicationWindow {
                 text: "<"
                 font.pixelSize: 18
                 onPressed: {
-                    if (BackEnd.currentPresetModified) {
+                    if (Backend.currentPresetModified) {
                         messageDialogWarningUnsaved.discard_func = () => {
                             comboBoxPreset.decrement();
                         }
@@ -112,7 +112,7 @@ ApplicationWindow {
                 text: ">"
                 font.pixelSize: 18
                 onPressed: {
-                    if (BackEnd.currentPresetModified) {
+                    if (Backend.currentPresetModified) {
                         messageDialogWarningUnsaved.discard_func = () => {
                             comboBoxPreset.increment();
                         }
@@ -138,7 +138,7 @@ ApplicationWindow {
             }
 
 //            Label {
-//                text: BackEnd.connected ? "Connected" : "Disconnected"
+//                text: Backend.connected ? "Connected" : "Disconnected"
 //            }
         }
     }

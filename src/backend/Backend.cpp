@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: GPL-3.0-only
 // SPDX-FileCopyrightText: 2022 Wolfgang Frisch
-#include "BackEnd.h"
+#include "Backend.h"
 #include <QDebug>
 #include <QStandardPaths>
 #include <QDir>
@@ -8,7 +8,7 @@
 #include <iostream>
 #include <QSettings>
 
-BackEnd::BackEnd(QObject *parent) :
+Backend::Backend(QObject *parent) :
     QObject(parent),
     m_current_preset(nullptr),
     m_current_preset_modified(false)
@@ -31,7 +31,7 @@ BackEnd::BackEnd(QObject *parent) :
 //       qDebug() << "PresetListModel::rowsInserted";
     });
 
-    connect(this, &BackEnd::currentPresetChanged, [this]() {
+    connect(this, &Backend::currentPresetChanged, [this]() {
         qDebug() << "currentPreset()" << currentPreset();
     });
 
@@ -48,23 +48,23 @@ BackEnd::BackEnd(QObject *parent) :
         settings().setValue("favorites", favorites);
     });
 
-    connect(this, &BackEnd::uiAccentColorChanged, [this]() {
+    connect(this, &Backend::uiAccentColorChanged, [this]() {
         settings().setValue("uiAccentColor", m_ui_accent_color);
     });
 
-    connect(this, &BackEnd::midiChannelInChanged, [this]() {
+    connect(this, &Backend::midiChannelInChanged, [this]() {
         settings().setValue("midiChannelIn", m_midi_channel_in);
     });
 
-    connect(this, &BackEnd::midiChannelOutChanged, [this]() {
+    connect(this, &Backend::midiChannelOutChanged, [this]() {
         settings().setValue("midiChannelOut", m_midi_channel_out);
     });
 
-    connect(this, &BackEnd::midiChannelAppChanged, [this]() {
+    connect(this, &Backend::midiChannelAppChanged, [this]() {
         settings().setValue("midiChannelApp", m_midi_channel_app);
     });
 
-    connect(this, &BackEnd::midiOutputResolutionChanged, [this]() {
+    connect(this, &Backend::midiOutputResolutionChanged, [this]() {
         settings().setValue("midiOutputResolution", m_midi_output_resolution);
     });
 
@@ -74,7 +74,7 @@ BackEnd::BackEnd(QObject *parent) :
 }
 
 
-QString BackEnd::presetsPath() {
+QString Backend::presetsPath() {
     QString config_path = QStandardPaths::writableLocation(QStandardPaths::ConfigLocation);
     QString presets_path = QDir(config_path).filePath("Presets");
     if (!QDir(presets_path).exists()) {
@@ -85,7 +85,7 @@ QString BackEnd::presetsPath() {
     return presets_path;
 }
 
-void BackEnd::copyFactoryPresets() {
+void Backend::copyFactoryPresets() {
     QDir presets_dir = QDir(presetsPath());
     qDebug() << "Copying factory presets to:" << presets_dir.path();
     auto factory_presets_dir = QDir(":/backend/factory-presets");
@@ -109,7 +109,7 @@ void BackEnd::copyFactoryPresets() {
     }
 }
 
-void BackEnd::loadPresets() {
+void Backend::loadPresets() {
     QDir presets_dir = QDir(presetsPath());
     qDebug() << "Reading presets from:" << presets_dir.path();
     presets_dir.setNameFilters({"*.mpr"});
@@ -131,10 +131,10 @@ void BackEnd::loadPresets() {
 }
 
 
-void BackEnd::selectPreset(const QString& name) {
+void Backend::selectPreset(const QString& name) {
     Preset* preset = m_presets->byName(name);
     if (preset == nullptr) {
-        qWarning() << "BackEnd::selectPreset called with invalid name";
+        qWarning() << "Backend::selectPreset called with invalid name";
         return;
     }
     m_params->assign(preset->params());
@@ -148,7 +148,7 @@ void BackEnd::selectPreset(const QString& name) {
     }
 }
 
-void BackEnd::renameCurrentPreset(const QString& new_name) {
+void Backend::renameCurrentPreset(const QString& new_name) {
     if (currentPreset()->name() == new_name) {
         qDebug() << "renameCurrentPreset failed: old and new name are identical";
         return;
@@ -169,7 +169,7 @@ void BackEnd::renameCurrentPreset(const QString& new_name) {
 }
 
 
-void BackEnd::saveCurrentPreset() {
+void Backend::saveCurrentPreset() {
     if (!m_current_preset_modified) {
         return;
     }
@@ -182,11 +182,11 @@ void BackEnd::saveCurrentPreset() {
 }
 
 
-QSettings BackEnd::settings() {
+QSettings Backend::settings() {
     return QSettings("wfr.github.com", "Open Claravox Editor");
 }
 
-Q_INVOKABLE QString BackEnd::appChangelog() {
+Q_INVOKABLE QString Backend::appChangelog() {
     QString result;
     QFile f(":/CHANGELOG.md");
     if (!f.open(QIODevice::ReadOnly | QIODevice::Text)) {
@@ -197,6 +197,6 @@ Q_INVOKABLE QString BackEnd::appChangelog() {
     return result;
 }
 
-Q_INVOKABLE QString BackEnd::presetsFolderURL() {
+Q_INVOKABLE QString Backend::presetsFolderURL() {
     return QUrl::fromLocalFile(presetsPath()).toString();
 }

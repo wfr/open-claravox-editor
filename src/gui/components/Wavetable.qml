@@ -8,7 +8,7 @@ import QtQuick.Layouts 1.0
 import QtQml.Models 2.15
 import QtQuick.Controls.Material 2.0
 
-import Claravox.BackEnd 1.0
+import Claravox.Backend 1.0
 
 Item {
     id: root
@@ -105,7 +105,7 @@ Item {
             unit: "Hz"
             description: "Scan Freq"
             function renderValue() {
-                let hz = BackEnd.params.oscScanFreqToHz(value);
+                let hz = Backend.params.oscScanFreqToHz(value);
                 if (hz < 100) {
                     return Number(hz).toFixed(1);
                 } else {

@@ -13,7 +13,7 @@
 #include "GroupListModel.h"
 #include "FilteredPresetListModel.h"
 
-class BackEnd : public QObject
+class Backend : public QObject
 {
     Q_OBJECT
     Q_PROPERTY(bool connected MEMBER m_connected NOTIFY connectedChanged)
@@ -35,7 +35,7 @@ class BackEnd : public QObject
     QML_ELEMENT
 
 public:
-    explicit BackEnd(QObject *parent = nullptr);
+    explicit Backend(QObject *parent = nullptr);
 
     Parameters* params() {
         return m_params;

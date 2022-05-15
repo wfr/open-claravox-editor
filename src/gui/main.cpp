@@ -12,7 +12,7 @@
 #include <chrono>
 
 #include "Claravox.h"
-#include "../backend/BackEnd.h"
+#include "../backend/Backend.h"
 
 void installDefaultFont()
 {
@@ -59,7 +59,7 @@ int main(int argc, char *argv[])
     QQmlApplicationEngine engine;
     installDefaultFont();
 
-    BackEnd* backend = new BackEnd();
+    Backend* backend = new Backend();
 
     qmlRegisterUncreatableType<Parameters,1>("Claravox.Parameters",1,0,"Parameters","Failed to register QML Parameters");
     qmlRegisterUncreatableType<Preset,1>("Claravox.Preset",1,0,"Preset","Failed to register QML Preset");
@@ -67,7 +67,7 @@ int main(int argc, char *argv[])
     qmlRegisterUncreatableType<TagListModel,1>("Claravox.TagListModel",1,0,"TagListModel","Failed to register QML TagListModel");
     qmlRegisterUncreatableType<GroupListModel,1>("Claravox.GroupListModel",1,0,"GroupListModel","Failed to register QML GroupListModel");
     qmlRegisterUncreatableType<FilteredPresetListModel,1>("Claravox.FilteredPresetListModel",1,0,"FilteredPresetListModel","Failed to register QML FilteredPresetListModel");
-    qmlRegisterSingletonInstance("Claravox.BackEnd", 1, 0, "BackEnd", backend);
+    qmlRegisterSingletonInstance("Claravox.Backend", 1, 0, "Backend", backend);
 
     QObject::connect(backend->params(), &Parameters::pitchCurveValChanged, [](double val) {
             qDebug() << "pitchCurveVal" << val;

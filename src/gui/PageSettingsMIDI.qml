@@ -14,7 +14,7 @@ import Qt.labs.platform
 
 import "components"
 
-import Claravox.BackEnd 1.0
+import Claravox.Backend 1.0
 
 ColumnLayout {
     x: 0
@@ -43,8 +43,8 @@ ColumnLayout {
             MidiChannel {
                 id: midiChannelIn
                 omni: true
-                channel: BackEnd.midiChannelIn
-                onChannelChanged: BackEnd.midiChannelIn = channel
+                channel: Backend.midiChannelIn
+                onChannelChanged: Backend.midiChannelIn = channel
             }
         }
 
@@ -60,8 +60,8 @@ ColumnLayout {
             MidiChannel {
                 id: midiChannelOut
                 omni: false
-                channel: BackEnd.midiChannelOut
-                onChannelChanged: BackEnd.midiChannelOut = channel
+                channel: Backend.midiChannelOut
+                onChannelChanged: Backend.midiChannelOut = channel
             }
         }
 

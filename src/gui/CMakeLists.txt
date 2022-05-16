@@ -11,8 +11,8 @@ set(CMAKE_AUTORCC ON)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-# Qt Widgets is only required for native dialogs, e.g. ColorDialog, in Qt 6
-find_package(QT NAMES Qt6 COMPONENTS Core Quick Widgets REQUIRED)
+# Qt Widgets is only required for native dialogs, e.g. ColorDialog
+find_package(QT NAMES Qt5 COMPONENTS Core Quick Widgets REQUIRED)
 find_package(Qt${QT_VERSION_MAJOR} COMPONENTS Core Quick Widgets REQUIRED)
 
 set(PROJECT_SOURCES

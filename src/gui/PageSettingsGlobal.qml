@@ -10,7 +10,7 @@ import QtQuick.Layouts 1.0
 import QtQml.Models 2.15
 import Qt.labs.qmlmodels 1.0
 //import QtQuick.Dialogs 1.3
-import Qt.labs.platform
+import Qt.labs.platform 1.1
 
 import "components"
 

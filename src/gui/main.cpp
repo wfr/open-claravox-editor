@@ -55,10 +55,11 @@ int main(int argc, char *argv[])
     QCoreApplication::setApplicationVersion("0.1");
 #if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
     QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
+    QGuiApplication app(argc, argv); // Pure QML
+#else
+    QApplication app(argc, argv); // QML + Widgets (e.g. native dialogs)
 #endif
 
-//    QGuiApplication app(argc, argv);
-    QApplication app(argc, argv);
     QQmlApplicationEngine engine;
     installDefaultFont();
 

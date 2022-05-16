@@ -146,10 +146,10 @@ void Parameters::assign(const Parameters& other) {
 
 QJsonObject Parameters::serialize() {
     QJsonObject result;
-    auto mo = this->metaObject();
-    for (int i = mo->propertyOffset(); i < mo->propertyCount(); i++) {
-        QMetaProperty mp = mo->property(i);
-        result.insert(mp.name(), mp.read(this).toDouble());
+    auto metaobj = this->metaObject();
+    for (int i = metaobj->propertyOffset(); i < metaobj->propertyCount(); i++) {
+        QMetaProperty metaprop = metaobj->property(i);
+        result.insert(metaprop.name(), metaprop.read(this).toDouble());
     }
     return result;
 }

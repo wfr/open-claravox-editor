@@ -11,7 +11,10 @@ Preset::Preset(QObject *parent) : QObject(parent)
 
 Preset::Preset(QObject *parent, const QJsonObject& obj)
     : QObject(parent) {
-    // TODO error handling
+    parse(obj);
+}
+
+void Preset::parse(const QJsonObject& obj) {
     m_instrument = obj.value("instrument").toString();
     m_name = obj.value("name").toString();
     m_group = obj.value("group").toString();
@@ -20,6 +23,7 @@ Preset::Preset(QObject *parent, const QJsonObject& obj)
     }
     m_parameters = new Parameters(this, obj.value("parameters").toObject());
     m_taglistmodel = new QStringListModel(QStringList(m_tags), this);
+    m_modMatrix = new ModMatrix(this, obj.value("modMatrix").toObject());
 }
 
 QJsonObject Preset::serialize() {

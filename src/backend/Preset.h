@@ -6,6 +6,7 @@
 #include <QJsonObject>
 #include <QStringListModel>
 #include "Parameters.h"
+#include "ModMatrix.h"
 
 class Preset : public QObject
 {
@@ -17,9 +18,13 @@ class Preset : public QObject
     Q_PROPERTY(Parameters* parameters MEMBER m_parameters)
     Q_PROPERTY(QDateTime lastModified MEMBER m_last_modified NOTIFY lastModifiedChanged)
     Q_PROPERTY(bool isFactory READ isFactory NOTIFY isFactoryChanged)
+    Q_PROPERTY(ModMatrix* modMatrix MEMBER m_modMatrix NOTIFY modMatrixChanged)
 public:
     explicit Preset(QObject *parent = nullptr);
     Preset(QObject *parent, const QJsonObject& obj);
+    void parse(const QJsonObject& obj);
+    QJsonObject serialize();
+    Preset* clone();
 
     QString name() const {
         return m_name;
@@ -65,8 +70,9 @@ public:
                 m_group == "Grégoire Blanc");
     }
 
-    QJsonObject serialize();
-    Preset* clone();
+    ModMatrix* modMatrix() const {
+        return m_modMatrix;
+    }
 
 signals:
     void nameChanged();
@@ -75,6 +81,7 @@ signals:
     void tagListChanged();
     void lastModifiedChanged();
     void isFactoryChanged();
+    void modMatrixChanged();
 
 public:
     QString m_instrument;
@@ -86,6 +93,7 @@ public:
 
 protected:
     QStringListModel* m_taglistmodel;
+    ModMatrix* m_modMatrix;
 };
 
 Q_DECLARE_METATYPE(Preset*)

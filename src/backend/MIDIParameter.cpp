@@ -6,13 +6,8 @@ const std::vector<MIDIParameter> midiparameters = {
     /***************************************************************
      * Instrument parameters (part of preset)
      ***************************************************************/
-    {
-        .name = "volCurveVal",
-        .cc = 12,
-        .nrpn = 412,
-        .max_value = 16383,
-        .description = "Adjusts the linearity of the Volume Antenna response (concave to convex)."
-    },
+    { "volCurveVal", 12, 412, 16383,
+       "Adjusts the linearity of the Volume Antenna response (concave to convex)." },
 
     { "pitchCurveVal", 13, 413, 16383,
       "Adjusts the linearity of the Pitch Antenna response (concave to convex)." },
@@ -47,10 +42,10 @@ const std::vector<MIDIParameter> midiparameters = {
     { "feedbackVal", 22, 422, 16383,
       "Adjusts the Delay Feedback amount." },
 
-    { "pitchModWsFreq", 72, 472, 127, // unsure
+    { "pitchModWsFreq", 72, 472, 127, // Pitch Antenna Mod: Wavetable Scan Freq
       "This parameter controls the depth of the PITCH CV signal used to modulate the frequency at which the oscillators’ wavetable is scanned." },
 
-    { "pitchModWsAmount", 73, 473, 127, // unsure
+    { "pitchModWsAmount", 73, 473, 127, // Pitch Antenna Mod: Wavetable Scan Pos
       "This parameter controls the depth of the PITCH CV signal used to modulate the scan position of the oscillators’ wavetable." },
 
     { "osc1Type", 81, 481, 96,
@@ -74,7 +69,7 @@ const std::vector<MIDIParameter> midiparameters = {
     { "osc2Beat", 28, 428, 127,
       "Linear offset (-10Hz to +10Hz) for the secondary oscillator frequency relative to the primary." },
 
-    { "osc2???", 27, 427, 127,
+    { "osc2Freq", 27, 427, 127,
       "Musical-pitch offset (-12 semitones to +12 semitones) for the secondary oscillator relative to the primary." },
 
     { "osc2Level", 26, 426, 16383,
@@ -82,6 +77,9 @@ const std::vector<MIDIParameter> midiparameters = {
 
     { "noiseLevel", 9, 409, 16383,
       "Specifies the level of the Noise source sent to the Filter of Oscillator 2." },
+
+//    { "osc2Type", ?, ?, 96,
+//      "Selects the mode for Oscillator 2." },
 
     { "osc2Wavetable", 82, 482, 112,
       "Selects the Wavetable in use for Oscillator 2, when the Oscillator 2 MODE is set to Wavetable (102)." },
@@ -131,37 +129,37 @@ const std::vector<MIDIParameter> midiparameters = {
     /***************************************************************
      * Global instrument settings (not part of preset)
      ***************************************************************/
-    { "?Volume CV Output Scale", 30, 430, 16383,
+    { "Volume CV Output Scale", 30, 430, 16383,
       "Attenuates the max CV Output level available to the selected Volume CV Out Range. Negative values invert the output range."},
 
-    { "?Volume CV Output Range", 104, 504, 86,
+    { "Volume CV Output Range", 104, 504, 86,
       "Sets the CV range found at the VOLUME OUT jack."},
 
-    { "?Pitch CV Output Range", 93, 493, 86,
+    { "Pitch CV Output Range", 93, 493, 86,
       "Sets the voltage range for the PITCH OUT CV jack."},
 
-    { "?Pitch CV Out Quantize", 95, 495, 64,
+    { "Pitch CV Out Quantize", 95, 495, 64,
       "Selects if the value of the PITCH OUT CV jack is determined before or after any quantization."},
 
-    { "?CV In Scale", 14, 414, 16383,
+    { "CV In Scale", 14, 414, 16383,
       "Scales the voltage of the CV IN jack plus/minus 100%; Center value = 0 output."},
 
-    { "?CV In Offset", 29, 429, 16383,
+    { "CV In Offset", 29, 429, 16383,
       "This parameter provides an offset voltage that is added or subtracted from the CV Input Range."},
 
-    { "?CV In Range", 92, 492, 64,
+    { "CV In Range", 92, 492, 64,
       "Sets the expected voltage range of the CV IN jack."},
 
-    { "?Mute Mode", 107, 507, 64,
+    { "Mute Mode", 107, 507, 64,
       "Determines whether the panel MUTE jack toggles MUTE on/off with successive presses (latching), or mutes on press/unmutes on release (momentary)."},
 
-    { "?MIDI Note On Threshold", 111, 511, 16383,
+    { "MIDI Note On Threshold", 111, 511, 16383,
       "Determines the Volume Antenna CV level at which a Note On/Off message will be sent. Note will remain On as long as Volume Antenna CV is above threshold, and will remain Off as long as Volume Antenna CV is below threshold."},
 
-    { "?Volume Antenna Control Mode", 113, 513, 86,
+    { "Volume Antenna Control Mode", 113, 513, 86,
       "Determines whether the Volume Antenna is active, active with automute enabled, or disabled with external MIDI CC# 7 control of Volume enabled."},
 
-    { "?Volume Antenna MIDI CC# Selection", 0 /* None */, 2501, 31,
+    { "Volume Antenna MIDI CC# Selection", 0 /* None */, 2501, 31,
       "Determines which MIDI CC# is used to send values corresponding with Volume Antenna CV."},
 };
 

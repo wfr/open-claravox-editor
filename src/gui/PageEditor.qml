@@ -12,14 +12,18 @@ import "components"
 
 import Claravox.Backend 1.0
 
-Item {
+ColumnLayout {
     width: 1400
     height: 900
 
     Flickable {
         clip: true
 
-        height: parent.height
+//        height: parent.height
+//        height: parent.height - modAssignments.height
+        Layout.fillHeight: true
+        Layout.fillWidth: true
+
 //        contentHeight: flow1.childrenRect.height
         contentHeight: editorContents.childrenRect.height
         bottomMargin: 16
@@ -61,7 +65,85 @@ Item {
             }
         } // wrapper
     } // Flickable
+
+    Item {
+        id: modWindow
+
+        function toggle() {
+            modAssignments.visible = !modAssignments.visible
+        }
+
+        Button {
+            id: buttonToggleMods
+            text: "CV MOD"
+            x: parent.width - width - scrollBar.width - 4 // arbitrary
+            y: -height
+            onClicked: {
+                modWindow.toggle()
+            }
+        }
+        Layout.fillWidth: true
+        Layout.preferredHeight: modAssignments.visible ? modAssignments.height : 0
+
+        Item {
+            id: modAssignments
+            height: 200
+            Rectangle {
+                width: parent.width
+                color: "white"
+                height: 200
+            }
+            ColumnLayout {
+                SectionLabel {
+                    text: "Volume Response Sources"
+                }
+                RowLayout {
+                    ColumnLayout {
+                        Button {
+                            checkable: true
+                            text: "Pitch CV"
+                        }
+                        LabeledSlider {
+                            description: "Depth"
+                            unit: "%"
+                            from: -100
+                            to: 100
+                            value: 0
+                        }
+                    }
+                    ColumnLayout {
+                        Button {
+                            checkable: true
+                            text: "Volume CV"
+                        }
+                        LabeledSlider {
+                            description: "Depth"
+                            unit: "%"
+                            from: -100
+                            to: 100
+                            value: 0
+                        }
+                    }
+                    ColumnLayout {
+                        Button {
+                            checkable: true
+                            text: "External CV"
+                        }
+                        LabeledSlider {
+                            description: "Depth"
+                            unit: "%"
+                            from: -100
+                            to: 100
+                            value: 0
+                        }
+                    }
+                }
+            }
+        }
+    }
 }
+
+
 
 /*##^##
 Designer {

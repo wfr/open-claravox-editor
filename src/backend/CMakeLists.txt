@@ -27,6 +27,8 @@ add_library(claravox-backend STATIC
     GroupListModel.cpp
     FilteredPresetListModel.cpp
     Util.cpp
+    Mod.cpp
+    ModMatrix.cpp
     
     Backend.h
     Claravox.h
@@ -39,6 +41,8 @@ add_library(claravox-backend STATIC
     GroupListModel.h
     FilteredPresetListModel.h
     Util.h
+    Mod.h
+    ModMatrix.h
 
     backend.qrc
 )

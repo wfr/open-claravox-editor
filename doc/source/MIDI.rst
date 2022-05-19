@@ -49,7 +49,8 @@ Undocumented messages
      - 0-16
      - | 0 = Omni
        | 1 = Channel 1
-       | ...
+       | 2 = Channel 2
+       | etc.
        | The app broadcasts this NRPN on all channels.
    * - MIDI Channel Out
      - 1027
@@ -155,8 +156,8 @@ Oscillator 2 Filter Frequency f(x)
 .. image:: images/osc2FilterFreq.csv.png
    :alt: Oscillator 2 Filter Frequency
 
-Undocumented initialization CC
-===================================
+Undocumented initialization CCs
+===============================
 The app sends a sequence of unknown CCs during initialization:
 
 ::
@@ -171,6 +172,29 @@ The app sends a sequence of unknown CCs during initialization:
     CC 118, Data 126
 
 The instruments responds with a large number of mostly unknown messages.
+
+Undocumented osc2Type CC
+========================
+`osc2Type` (Oscillator 2 Mode) is undocumented by Moog.
+
+.. list-table:: Instrument parameters
+   :widths: auto
+   :header-rows: 1
+
+   * - Parameter
+     - CC#
+     - NRPN#
+     - Range
+     - Notes
+   * - Oscillator 2 Mode
+     - ??
+     - 400 + ??
+     - 0 - 96
+     - | Selects the mode for Oscillator 2.
+       | 0 = Sine
+       | 32 = Triangle
+       | 64 = Saw
+       | 96 = Wavetable
 
 Documented messages
 ===================
@@ -300,6 +324,10 @@ The following tables are transcribed from the instrument's official documentatio
      - 481
      - 0 - 96
      - | Selects the mode for Oscillator 1.
+       | 0 = Sine
+       | 32 = Triangle
+       | 64 = Saw
+       | 96 = Wavetable
    * - Oscillator 1 Level
      - 25
      - 425

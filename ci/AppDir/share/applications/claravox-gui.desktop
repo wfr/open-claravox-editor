@@ -1,0 +1,7 @@
+[Desktop Entry]
+Type=Application
+Name=Open Claravox Editor
+Comment=An editor for the Moog Claravox Theremin
+Exec=claravox-gui
+Icon=claravox-gui
+Categories=Audio;

@@ -48,6 +48,9 @@ Item {
             policy: ScrollBar.AlwaysOn
         }
 
+//        maximumFlickVelocity: 1500 // workaround for QTBUG-56075
+//        flickDeceleration: 5000
+
         Item {
             id: wrapper
             width: 1050

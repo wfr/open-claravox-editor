@@ -78,7 +78,8 @@ Item {
             }
             Flickable {
                 height: 120
-                maximumFlickVelocity: 500
+                // QTBUG-56075 mediocre mitigation:
+//                maximumFlickVelocity: 500
                 Layout.fillWidth: true
                 flickableDirection: Flickable.VerticalFlick
                 boundsMovement: Flickable.StopAtBounds
@@ -100,7 +101,8 @@ Item {
             }
             Flickable {
                 height: 120
-                maximumFlickVelocity: 500
+                // QTBUG-56075 mediocre mitigation:
+//                maximumFlickVelocity: 500
                 Layout.fillWidth: true
                 flickableDirection: Flickable.VerticalFlick
                 boundsMovement: Flickable.StopAtBounds

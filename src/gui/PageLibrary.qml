@@ -213,10 +213,11 @@ Item {
                 height: parent.height
                 contentHeight: columnLayoutTR.childrenRect.height
 
-                maximumFlickVelocity: 800
+                // QTBUG-56075 mediocre mitigation:
+//                maximumFlickVelocity: 800
 
-//                boundsMovement: Flickable.StopAtBounds
-//                boundsBehavior: Flickable.DragOverBounds
+                boundsMovement: Flickable.StopAtBounds
+                boundsBehavior: Flickable.DragOverBounds
 
                 ScrollBar.vertical: ScrollBar {
                     id: scrollBar

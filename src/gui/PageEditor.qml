@@ -87,6 +87,7 @@ ColumnLayout {
 
         Item {
             id: modAssignments
+            visible: false
             height: 200
             Rectangle {
                 width: parent.width

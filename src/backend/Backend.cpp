@@ -50,6 +50,11 @@ Backend::Backend(QObject *parent) :
         settings().setValue("favorites", favorites);
     });
 
+    connect(m_presets, &PresetListModel::dataChanged, [this]() {
+        m_filtered_presets->invalidate();
+        emit currentFilteredPresetIndexChanged();
+    });
+
     connect(this, &Backend::uiAccentColorChanged, [this]() {
         settings().setValue("uiAccentColor", m_ui_accent_color);
     });
@@ -146,6 +151,7 @@ void Backend::selectPreset(const QString& name) {
         m_current_preset_modified = false;
         emit currentPresetChanged();
         emit currentPresetIndexChanged();
+        emit currentFilteredPresetIndexChanged();
         emit currentPresetModified();
     }
 }

@@ -100,9 +100,10 @@ Item {
 
                 ListView {
                     id: presetListView
-                    model: Backend.presets
-                    // model: Backend.filteredPresets
-                    currentIndex: Backend.currentPresetIndex
+//                    model: Backend.presets
+//                    currentIndex: Backend.currentPresetIndex
+                    model: Backend.filteredPresets
+                    currentIndex: Backend.currentFilteredPresetIndex
 
                     topMargin: 0
                     // Ugly layout
@@ -160,9 +161,10 @@ Item {
                         MouseArea {
                             anchors.fill: parent
                             onClicked: {
-                                let preset = Backend.presets.byIndex(index);
-                                console.log("clicked preset", index, preset.name);
-                                Backend.selectPreset(preset.name);
+//                                let preset = Backend.presets.byIndex(index);
+//                                console.log("clicked preset", index, preset.name);
+//                                Backend.selectPreset(preset.name);
+                                Backend.currentFilteredPresetIndex = index
                             }
                         }
                     }
@@ -236,6 +238,9 @@ Item {
                         text: "Favorite"
                         checkable: true
                         Layout.fillWidth: true
+                        onCheckedChanged: {
+                            Backend.filteredPresets.setFilterFavorites(checked);
+                        }
                     }
 
                     SectionLabel {
@@ -245,13 +250,16 @@ Item {
                     ColumnLayout {
                         Layout.minimumWidth: 250
                         spacing: 0
+
                         Repeater {
                             model: Backend.groups
+                            id: groupFilterRepeater
                             Button {
                                 text: model.group
                                 Layout.fillWidth: true
                                 checkable: true
                                 spacing: 0
+                                onCheckedChanged: Backend.filteredPresets.setFilterGroup(model.group, checked)
                             }
                         }
                     }
@@ -276,6 +284,7 @@ Item {
                                     bottom: 0
                                     left: 0
                                 }
+                                onCheckedChanged: Backend.filteredPresets.setFilterTag(model.tag, checked)
                             }
                         }
                     }

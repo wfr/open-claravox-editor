@@ -25,6 +25,7 @@ class Backend : public QObject
     Q_PROPERTY(int currentPresetIndex READ currentPresetIndex NOTIFY currentPresetIndexChanged)
     Q_PROPERTY(bool currentPresetModified MEMBER m_current_preset_modified NOTIFY currentPresetModified)
     Q_PROPERTY(FilteredPresetListModel* filteredPresets MEMBER m_filtered_presets NOTIFY filteredPresetsChanged)
+    Q_PROPERTY(int currentFilteredPresetIndex READ currentFilteredPresetIndex WRITE setFilteredPresetIndex NOTIFY currentFilteredPresetIndexChanged)
     // maybe move to a dedicated Preferences model?
     Q_PROPERTY(QString uiAccentColor MEMBER m_ui_accent_color NOTIFY uiAccentColorChanged)
     Q_PROPERTY(bool uiWarnUnsavedChanges MEMBER m_ui_warn_unsaved_changes NOTIFY uiWarnUnsavedChangesChanged)
@@ -61,6 +62,18 @@ public:
         return m_current_preset_index;
     }
 
+    int currentFilteredPresetIndex() {
+        QModelIndex src_idx = m_presets->index(currentPresetIndex());
+        int dst_idx = m_filtered_presets->mapFromSource(src_idx).row();
+        return dst_idx;
+    }
+
+    void setFilteredPresetIndex(int idx) {
+        QModelIndex dst_idx = m_filtered_presets->index(idx, 0);
+        int src_idx = m_filtered_presets->mapToSource(dst_idx).row();
+        selectPreset(m_presets->byIndex(src_idx)->name());
+    }
+
     Q_INVOKABLE void selectPreset(const QString& name);
     Q_INVOKABLE bool renameCurrentPreset(const QString& new_name);
     Q_INVOKABLE void saveCurrentPreset();
@@ -80,6 +93,7 @@ signals:
     void currentPresetIndexChanged();
     void currentPresetModified();
     void filteredPresetsChanged();
+    void currentFilteredPresetIndexChanged();
     void uiAccentColorChanged();
     void uiWarnUnsavedChangesChanged();
     void midiChannelInChanged();

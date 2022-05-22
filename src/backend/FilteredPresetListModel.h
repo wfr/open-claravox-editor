@@ -20,13 +20,19 @@ public:
 
     bool filterAcceptsRow(int sourceRow, const QModelIndex &sourceParent) const override;
 
-    //! show only presets with one of these tags
-    void setFilterTags(const QStringList& tags);
-
     //! show only favorites
-    void setFilterFavorites(bool);
+    Q_INVOKABLE void setFilterFavorites(bool);
+
+    //! show only certain groups
+    Q_INVOKABLE void setFilterGroups(const QStringList& groups);
+    Q_INVOKABLE void setFilterGroup(const QString& group, bool state);
+
+    //! show only presets with one of these tags
+    Q_INVOKABLE void setFilterTags(const QStringList& tags);
+    Q_INVOKABLE void setFilterTag(const QString& tag, bool state);
 
 protected:
-    QSet<QString> m_tags;
     bool m_filter_favorites = false;
+    QSet<QString> m_groups;
+    QSet<QString> m_tags;
 };

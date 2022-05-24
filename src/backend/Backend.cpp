@@ -27,6 +27,8 @@ Backend::Backend(QObject *parent) :
     m_midi_channel_out = settings().value("midiChannelOut", 1).toInt();
     m_midi_channel_app = settings().value("midiChannelApp", 1).toInt();
 
+    qDebug() << "settings path: " << settings().fileName();
+
     connect(m_presets, &PresetListModel::rowsInserted, [] {
 //       qDebug() << "PresetListModel::rowsInserted";
     });
@@ -75,11 +77,11 @@ Backend::Backend(QObject *parent) :
 
 
 QString Backend::presetsPath() {
-    QString config_path = QStandardPaths::writableLocation(QStandardPaths::ConfigLocation);
-    QString presets_path = QDir(config_path).filePath("Presets");
+    QDir config_dir = QFileInfo(settings().fileName()).dir();
+    QString presets_path = config_dir.filePath("Presets");
     if (!QDir(presets_path).exists()) {
         if (!QDir().mkpath(presets_path)) {
-            throw new std::runtime_error("cannot create presets_dir");
+            throw new std::runtime_error("cannot create presets_path");
         }
     }
     return presets_path;
@@ -183,7 +185,7 @@ void Backend::saveCurrentPreset() {
 
 
 QSettings Backend::settings() {
-    return QSettings("wfr.github.com", "Open Claravox Editor");
+    return QSettings("Claravox", "open-claravox-editor");
 }
 
 Q_INVOKABLE QString Backend::appChangelog() {

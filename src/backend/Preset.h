@@ -25,10 +25,18 @@ public:
         return m_name;
     }
 
+    static bool isValidName(const QString& n) {
+        QRegExp rx(R"(^[0-9A-Za-z ^$+]{1,19})");
+        return rx.exactMatch(n);
+    }
+
     void setName(const QString& new_name) {
-        // TODO: validate
-        m_name = new_name;
-        emit nameChanged();
+        if (isValidName(new_name)) {
+            m_name = new_name;
+            emit nameChanged();
+        } else {
+            throw std::runtime_error("Preset::setName() with invalid name.");
+        }
     }
 
     QString group() const {

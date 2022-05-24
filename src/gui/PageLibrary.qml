@@ -308,8 +308,10 @@ Item {
                                 text: Backend.currentPreset.name
                                 font.pointSize: 16
                                 color: Material.primaryTextColor
+                                validator: RegularExpressionValidator { regularExpression: /^[0-9A-Za-z +$^]{1,19}$/ }
                                 onAccepted: {
                                     Backend.renameCurrentPreset(text);
+                                    text = Backend.currentPreset.name
                                 }
                             }
                             Button {

@@ -150,14 +150,14 @@ void Backend::selectPreset(const QString& name) {
     }
 }
 
-void Backend::renameCurrentPreset(const QString& new_name) {
+bool Backend::renameCurrentPreset(const QString& new_name) {
     if (currentPreset()->name() == new_name) {
         qDebug() << "renameCurrentPreset failed: old and new name are identical";
-        return;
+        return false;
     }
     if (m_presets->byName(new_name) != nullptr) {
         qDebug() << "renameCurrentPreset failed: new name already exists";
-        return;
+        return false;
     }
     qDebug() << "Renaming current preset to" << new_name;
 //    Preset* p = m_presets->byName(currentPreset()->name());
@@ -168,6 +168,7 @@ void Backend::renameCurrentPreset(const QString& new_name) {
     int row = m_presets->findRow(m_current_preset);
     m_presets->setData(m_presets->index(row, 0), new_name, PresetListModel::NameRole);
     m_current_preset->setName(new_name);
+    return true;
 }
 
 

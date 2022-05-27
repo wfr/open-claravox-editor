@@ -1,32 +1,32 @@
 // SPDX-License-Identifier: GPL-3.0-only
 // SPDX-FileCopyrightText: 2022 Wolfgang Frisch
 #include "Preset.h"
+#include "Util.h"
 #include <cassert>
 #include <QJsonArray>
 
 Preset::Preset(QObject *parent) : QObject(parent)
 {
-
+    m_parameters = new Parameters(this);
+    m_taglistmodel = new QStringListModel(this);
+    m_modMatrix = new ModMatrix(this);
 }
 
-Preset::Preset(QObject *parent, const QJsonObject& obj)
-    : QObject(parent) {
-    parse(obj);
-}
-
-void Preset::parse(const QJsonObject& obj) {
-    m_instrument = obj.value("instrument").toString();
-    m_name = obj.value("name").toString();
-    m_group = obj.value("group").toString();
+bool Preset::parse(const QJsonObject& obj) {
+    bool ok = true;
+    ok &= getJsonValue(obj, "instrument", m_instrument);
+    ok &= getJsonValue(obj, "name", m_name);
+    ok &= getJsonValue(obj, "group", m_group);
+    ok &= m_parameters->parse(obj.value("parameters").toObject());
     for (const auto value : obj.value("tags").toArray()) {
         m_tags.push_back(value.toString());
     }
-    m_parameters = new Parameters(this, obj.value("parameters").toObject());
-    m_taglistmodel = new QStringListModel(QStringList(m_tags), this);
-    m_modMatrix = new ModMatrix(this, obj.value("modMatrix").toObject());
+    m_taglistmodel->setStringList(m_tags);
+    ok &= m_modMatrix->parse(obj.value("modMatrix").toObject());
+    return ok;
 }
 
-QJsonObject Preset::serialize() {
+QJsonObject Preset::serialize() const {
     QJsonObject result;
     result["instrument"] = m_instrument;
     result["name"] = m_name;
@@ -40,5 +40,7 @@ QJsonObject Preset::serialize() {
 }
 
 Preset* Preset::clone() {
-    return new Preset(parent(), serialize());
+    auto p = new Preset(parent());
+    p->parse(serialize());
+    return p;
 }

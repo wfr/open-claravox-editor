@@ -65,11 +65,6 @@ ModMatrix::ModMatrix(QObject *parent)
     }
 }
 
-ModMatrix::ModMatrix(QObject* parent, const QJsonObject& obj)
-    : ModMatrix(parent) {
-    parse(obj);
-}
-
 size_t ModMatrix::countMods() {
     size_t cnt = 0;
     for (size_t i = 0; i < m_mods.size(); i++) {
@@ -84,26 +79,34 @@ bool ModMatrix::isValid() {
     return countMods() <= MAX_SIMULTANEOUS_MODS;
 }
 
-void ModMatrix::cleanup() {
+void ModMatrix::removeUnusedMods() {
     for (size_t i = 0; i < MAX_MODS; i++) {
-        if (!m_mods.at(i)->enabled()) {
+        if (m_mods.at(i) != nullptr && !m_mods.at(i)->enabled()) {
             m_mods.at(i) = nullptr;
         }
     }
 }
 
-void ModMatrix::parse(const QJsonObject& obj) {
+bool ModMatrix::parse(const QJsonObject& obj) {
+    bool ok = true;
     QJsonArray destinations = obj.value("destinations").toArray();
-    assert(destinations.size() == MAX_MODS);
+    if (destinations.size() != MAX_MODS) {
+        qWarning() << "ModMatrix::parse destinations.size() != MAX_MODS";
+        return false;
+    }
     for (size_t pos = 0; pos < MAX_MODS; pos++) {
         if (destinations.at(pos).isNull()) {
             m_mods.at(pos) = nullptr;
         } else {
             Mod* m = new Mod(this);
-            m->parse(destinations.at(pos).toObject());
+            if (!m->parse(destinations.at(pos).toObject())) {
+                qWarning() << "ModMatrix::parse failed at pos" << pos;
+            }
             m_mods.at(pos) = m;
         }
     }
+    removeUnusedMods();
+    return ok && isValid();
 }
 
 QJsonObject ModMatrix::serialize() {

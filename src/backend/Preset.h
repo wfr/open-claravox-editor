@@ -21,9 +21,9 @@ class Preset : public QObject
     Q_PROPERTY(ModMatrix* modMatrix MEMBER m_modMatrix NOTIFY modMatrixChanged)
 public:
     explicit Preset(QObject *parent = nullptr);
-    Preset(QObject *parent, const QJsonObject& obj);
-    void parse(const QJsonObject& obj);
-    QJsonObject serialize();
+
+    bool parse(const QJsonObject& obj);
+    QJsonObject serialize() const;
     Preset* clone();
 
     QString name() const {

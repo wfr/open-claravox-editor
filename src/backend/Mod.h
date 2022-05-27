@@ -15,8 +15,9 @@ class Mod : public QObject
 public:
     explicit Mod(QObject *parent = nullptr);
 
-    void parse(const QJsonObject& obj);
-    QJsonObject serialize();
+    bool parse(const QJsonObject& obj);
+    bool isValid() const;
+    QJsonObject serialize() const;
 
     bool enabled();
 

@@ -128,15 +128,20 @@ void Backend::loadPresets() {
         auto bytes = f.readAll();
         f.close();
 
+        qDebug() << "Parse preset:" << fileinfo.baseName();
         auto doc = QJsonDocument::fromJson(bytes);
-        auto preset = new Preset(this, doc.object());
+        auto preset = new Preset(this);
+        if (!preset->parse(doc.object())) {
+            // TODO: handle error properly
+            qCritical() << "Failed to parse preset: " << fileinfo.baseName();
+            throw std::runtime_error("Backend::loadPresets failed");
+        }
 
         preset->setProperty("lastModified", fileinfo.lastModified());
 //        qDebug().noquote() << QString("Preset | Group: %1, Name: %2").arg(preset->m_group).arg(preset->m_name);
         m_presets->append(preset);
     }
 }
-
 
 void Backend::selectPreset(const QString& name) {
     Preset* preset = m_presets->byName(name);

@@ -14,7 +14,7 @@
 #include <chrono>
 
 #include "Claravox.h"
-#include "../backend/Backend.h"
+#include "Backend.h"
 
 void installDefaultFont()
 {

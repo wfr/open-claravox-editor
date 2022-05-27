@@ -66,7 +66,9 @@ public:
     explicit Parameters(QObject *parent = nullptr);
     Parameters(QObject *parent, const QJsonObject& obj);
     void assign(const Parameters& other);
-    QJsonObject serialize();
+
+    bool parse(const QJsonObject& obj);
+    QJsonObject serialize() const;
 
     Q_INVOKABLE static double filterValToHz(double x);
     Q_INVOKABLE static double oscScanFreqToHz(double x);

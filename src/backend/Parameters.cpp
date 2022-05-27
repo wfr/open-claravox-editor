@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 // SPDX-FileCopyrightText: 2022 Wolfgang Frisch
 #include "Parameters.h"
+#include "Util.h"
 #include <cmath>
 #include <QList>
 #include <QException>
@@ -63,88 +64,65 @@ void Parameters::emitPropertyChanged(const QString& property_name) {
     emit propertyChanged(property_name);
 }
 
-class PresetParserException : public QException
-{
-public:
-    void raise() const override { throw *this; }
-    PresetParserException *clone() const override { return new PresetParserException(*this); }
-};
-
-
-QJsonValue needValue(const QJsonObject& obj, const QString &key) {
-    QJsonValue ret = obj.value(key);
-    if (ret.isUndefined()) {
-        throw new PresetParserException;
-    }
-    return ret;
-}
-
-void needValue(const QJsonObject& obj, const QString &key, double &dst) {
-    dst = needValue(obj, key).toDouble();
-}
-
-Parameters::Parameters(QObject *parent, const QJsonObject& obj)
-    : QObject(parent)
-{
-    needValue(obj, "brightVal", m_brightVal);
-    needValue(obj, "delayAmount", m_delayAmount);
-    needValue(obj, "feedbackVal", m_feedbackVal);
-    needValue(obj, "filterVal", m_filterVal);
-    needValue(obj, "knobScale1", m_knobScale1);
-    needValue(obj, "knobScale2", m_knobScale2);
-    needValue(obj, "knobScale3", m_knobScale3);
-    needValue(obj, "knobScale4", m_knobScale4);
-    needValue(obj, "midiNoteNumber", m_midiNoteNumber);
-    needValue(obj, "midiNoteNumberMode", m_midiNoteNumberMode);
-    needValue(obj, "midiPitchOut", m_midiPitchOut);
-    needValue(obj, "noiseLevel", m_noiseLevel);
-    needValue(obj, "octaveState", m_octaveState);
-    needValue(obj, "osc1FilterPitchAmount", m_osc1FilterPitchAmount);
-    needValue(obj, "osc1FilterVolumeAmount", m_osc1FilterVolumeAmount);
-    needValue(obj, "osc1Level", m_osc1Level);
-    needValue(obj, "osc1ScanAmount", m_osc1ScanAmount);
-    needValue(obj, "osc1ScanFreq", m_osc1ScanFreq);
-    needValue(obj, "osc1ScanPos", m_osc1ScanPos);
-    needValue(obj, "osc1Type", m_osc1Type);
-    needValue(obj, "osc1Wavetable", m_osc1Wavetable);
-    needValue(obj, "osc2Beat", m_osc2Beat);
-    needValue(obj, "osc2FilterEnable", m_osc2FilterEnable);
-    needValue(obj, "osc2FilterFreq", m_osc2FilterFreq);
-    needValue(obj, "osc2FilterMode", m_osc2FilterMode);
-    needValue(obj, "osc2FilterPitchAmount", m_osc2FilterPitchAmount);
-    needValue(obj, "osc2FilterRes", m_osc2FilterRes);
-    needValue(obj, "osc2FilterVolumeAmount", m_osc2FilterVolumeAmount);
-    needValue(obj, "osc2Freq", m_osc2Freq);
-    needValue(obj, "osc2Level", m_osc2Level);
-    needValue(obj, "osc2ScanAmount", m_osc2ScanAmount);
-    needValue(obj, "osc2ScanFreq", m_osc2ScanFreq);
-    needValue(obj, "osc2ScanPos", m_osc2ScanPos);
-    needValue(obj, "osc2Type", m_osc2Type);
-    needValue(obj, "osc2Wavetable", m_osc2Wavetable);
-    needValue(obj, "pitchBendRange", m_pitchBendRange);
-    needValue(obj, "pitchCurveVal", m_pitchCurveVal);
-    needValue(obj, "pitchModWsAmount", m_pitchModWsAmount);
-    needValue(obj, "pitchModWsFreq", m_pitchModWsFreq);
-    needValue(obj, "quantizeAmount", m_quantizeAmount);
-    needValue(obj, "rootVal", m_rootVal);
-    needValue(obj, "scaleVal", m_scaleVal);
-    needValue(obj, "timeVal", m_timeVal);
-    needValue(obj, "volCurveVal", m_volCurveVal);
-    needValue(obj, "waveVal", m_waveVal);
-}
-
 void Parameters::assign(const Parameters& other) {
     auto mo = this->metaObject();
     for (int i = mo->propertyOffset(); i < mo->propertyCount(); i++) {
         QMetaProperty mp = mo->property(i);
-//        if (mp.read(&other) != mp.read(this)) {
-//            qDebug() << "Parameters::update" << mp.name() << mp.read(this).toDouble() << "->" << mp.read(&other).toDouble();
-//        }
         setProperty(mp.name(), mp.read(&other));
     }
 }
 
-QJsonObject Parameters::serialize() {
+bool Parameters::parse(const QJsonObject& obj) {
+    bool ok = true;
+    ok &= getJsonValue(obj, "brightVal", m_brightVal);
+    ok &= getJsonValue(obj, "delayAmount", m_delayAmount);
+    ok &= getJsonValue(obj, "feedbackVal", m_feedbackVal);
+    ok &= getJsonValue(obj, "filterVal", m_filterVal);
+    ok &= getJsonValue(obj, "knobScale1", m_knobScale1);
+    ok &= getJsonValue(obj, "knobScale2", m_knobScale2);
+    ok &= getJsonValue(obj, "knobScale3", m_knobScale3);
+    ok &= getJsonValue(obj, "knobScale4", m_knobScale4);
+    ok &= getJsonValue(obj, "midiNoteNumber", m_midiNoteNumber);
+    ok &= getJsonValue(obj, "midiNoteNumberMode", m_midiNoteNumberMode);
+    ok &= getJsonValue(obj, "midiPitchOut", m_midiPitchOut);
+    ok &= getJsonValue(obj, "noiseLevel", m_noiseLevel);
+    ok &= getJsonValue(obj, "octaveState", m_octaveState);
+    ok &= getJsonValue(obj, "osc1FilterPitchAmount", m_osc1FilterPitchAmount);
+    ok &= getJsonValue(obj, "osc1FilterVolumeAmount", m_osc1FilterVolumeAmount);
+    ok &= getJsonValue(obj, "osc1Level", m_osc1Level);
+    ok &= getJsonValue(obj, "osc1ScanAmount", m_osc1ScanAmount);
+    ok &= getJsonValue(obj, "osc1ScanFreq", m_osc1ScanFreq);
+    ok &= getJsonValue(obj, "osc1ScanPos", m_osc1ScanPos);
+    ok &= getJsonValue(obj, "osc1Type", m_osc1Type);
+    ok &= getJsonValue(obj, "osc1Wavetable", m_osc1Wavetable);
+    ok &= getJsonValue(obj, "osc2Beat", m_osc2Beat);
+    ok &= getJsonValue(obj, "osc2FilterEnable", m_osc2FilterEnable);
+    ok &= getJsonValue(obj, "osc2FilterFreq", m_osc2FilterFreq);
+    ok &= getJsonValue(obj, "osc2FilterMode", m_osc2FilterMode);
+    ok &= getJsonValue(obj, "osc2FilterPitchAmount", m_osc2FilterPitchAmount);
+    ok &= getJsonValue(obj, "osc2FilterRes", m_osc2FilterRes);
+    ok &= getJsonValue(obj, "osc2FilterVolumeAmount", m_osc2FilterVolumeAmount);
+    ok &= getJsonValue(obj, "osc2Freq", m_osc2Freq);
+    ok &= getJsonValue(obj, "osc2Level", m_osc2Level);
+    ok &= getJsonValue(obj, "osc2ScanAmount", m_osc2ScanAmount);
+    ok &= getJsonValue(obj, "osc2ScanFreq", m_osc2ScanFreq);
+    ok &= getJsonValue(obj, "osc2ScanPos", m_osc2ScanPos);
+    ok &= getJsonValue(obj, "osc2Type", m_osc2Type);
+    ok &= getJsonValue(obj, "osc2Wavetable", m_osc2Wavetable);
+    ok &= getJsonValue(obj, "pitchBendRange", m_pitchBendRange);
+    ok &= getJsonValue(obj, "pitchCurveVal", m_pitchCurveVal);
+    ok &= getJsonValue(obj, "pitchModWsAmount", m_pitchModWsAmount);
+    ok &= getJsonValue(obj, "pitchModWsFreq", m_pitchModWsFreq);
+    ok &= getJsonValue(obj, "quantizeAmount", m_quantizeAmount);
+    ok &= getJsonValue(obj, "rootVal", m_rootVal);
+    ok &= getJsonValue(obj, "scaleVal", m_scaleVal);
+    ok &= getJsonValue(obj, "timeVal", m_timeVal);
+    ok &= getJsonValue(obj, "volCurveVal", m_volCurveVal);
+    ok &= getJsonValue(obj, "waveVal", m_waveVal);
+    return ok;
+}
+
+QJsonObject Parameters::serialize() const {
     QJsonObject result;
     auto metaobj = this->metaObject();
     for (int i = metaobj->propertyOffset(); i < metaobj->propertyCount(); i++) {

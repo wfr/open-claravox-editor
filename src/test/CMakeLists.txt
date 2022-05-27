@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.14)
 
-project(TestPresetSerialization LANGUAGES CXX)
+project(TestPresetParser LANGUAGES CXX)
 
 enable_testing()
 
@@ -16,8 +16,11 @@ set(CMAKE_AUTORCC ON)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-add_executable(TestPresetSerialization tst_presetserialization.cpp)
-add_test(NAME TestPresetSerialization COMMAND TestPresetSerialization)
+add_executable(TestPresetParser tst_presetparser.cpp ../backend/backend.qrc)
+add_test(NAME TestPresetParser COMMAND TestPresetParser)
 
-target_link_libraries(TestPresetSerialization PRIVATE Qt${QT_VERSION_MAJOR}::Test)
+target_link_libraries(TestPresetParser PRIVATE Qt${QT_VERSION_MAJOR}::Test)
 
+# Claravox back-end library
+target_link_libraries (TestPresetParser LINK_PUBLIC claravox-backend)
+target_include_directories (TestPresetParser PUBLIC ${CMAKE_CURRENT_SOURCE_DIR} ${CMAKE_CURRENT_SOURCE_DIR}/../backend)

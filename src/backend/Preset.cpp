@@ -28,14 +28,17 @@ bool Preset::parse(const QJsonObject& obj) {
 
 QJsonObject Preset::serialize() const {
     QJsonObject result;
+    result["version"] = 1;
     result["instrument"] = m_instrument;
     result["name"] = m_name;
     result["group"] = m_group;
-    result["tags"] = QJsonArray();
+    QJsonArray tags_arr;
     for (const auto& tag : m_tags) {
-        result["tags"].toArray().append(QJsonValue(tag));
+        tags_arr.append(QJsonValue(tag));
     }
+    result["tags"] = tags_arr;
     result["parameters"] = m_parameters->serialize();
+    result["modMatrix"] = m_modMatrix->serialize();
     return result;
 }
 

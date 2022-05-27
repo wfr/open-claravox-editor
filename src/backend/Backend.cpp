@@ -131,15 +131,14 @@ void Backend::loadPresets() {
         qDebug() << "Parse preset:" << fileinfo.baseName();
         auto doc = QJsonDocument::fromJson(bytes);
         auto preset = new Preset(this);
-        if (!preset->parse(doc.object())) {
-            // TODO: handle error properly
-            qCritical() << "Failed to parse preset: " << fileinfo.baseName();
-            throw std::runtime_error("Backend::loadPresets failed");
+        if (preset->parse(doc.object())) {
+            preset->setProperty("lastModified", fileinfo.lastModified());
+            m_presets->append(preset);
+        } else {
+            // TODO: display warning in GUI
+            qWarning() << "Ignoring invalid preset: " << fileinfo.baseName();
+            delete preset;
         }
-
-        preset->setProperty("lastModified", fileinfo.lastModified());
-//        qDebug().noquote() << QString("Preset | Group: %1, Name: %2").arg(preset->m_group).arg(preset->m_name);
-        m_presets->append(preset);
     }
 }
 

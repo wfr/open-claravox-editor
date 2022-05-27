@@ -12,11 +12,11 @@ bool Mod::parse(const QJsonObject& obj) {
     bool ok =
             obj.value("cc").isDouble() &&
             obj.value("pitchCvEnable").isBool() &&
-            obj.value("pitchCvAmount").toDouble() &&
+            obj.value("pitchCvAmount").isDouble() &&
             obj.value("volumeCvEnable").isBool() &&
             obj.value("volumeCvAmount").isDouble() &&
             obj.value("externalCvEnable").isBool() &&
-            obj.value("externalCvAmount").toDouble();
+            obj.value("externalCvAmount").isDouble();
     if (!ok)
         return false;
     m_cc = obj.value("cc").toInt();

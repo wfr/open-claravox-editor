@@ -1,9 +1,6 @@
 #include <QtTest>
-#include "Backend.h"
-#include "Preset.h"
 #include <iostream>
-
-// add necessary includes here
+#include "Preset.h"
 
 class TestPresetParser : public QObject
 {
@@ -20,6 +17,7 @@ private slots:
     void test_parse_serialize();
 
 protected:
+    QString diff(const QByteArray& a, const QByteArray& b);
 };
 
 TestPresetParser::TestPresetParser()
@@ -50,19 +48,20 @@ void TestPresetParser::test_parse_serialize_data() {
  *  - normalize json --> store as A
  *  - parse A into Preset P
  *  - serialize Preset P --> store as B
- *  - diff A vs. B
- *  TODO: skip test when /usr/bin/diff isn't available
- *        or replace with own code
+ *  - test A == B
  */
 void TestPresetParser::test_parse_serialize()
 {
     QFETCH(QFileInfo, fileinfo);
 
+    QByteArray in_bytes_normalized;
+    QByteArray out_bytes;
+
     /*** Normalize input A ***/
     auto in_file = QFile(fileinfo.absoluteFilePath());
     QVERIFY(in_file.open(QIODevice::ReadOnly));
-    auto in_bytes_raw = in_file.readAll();
-    auto in_doc = QJsonDocument::fromJson(in_bytes_raw);
+    auto in_doc = QJsonDocument::fromJson(in_file.readAll());
+    in_file.close();
 
     // cull/ignore inactive modMatrix entries
     QJsonArray destinations = in_doc["modMatrix"]["destinations"].toArray();
@@ -83,7 +82,7 @@ void TestPresetParser::test_parse_serialize()
     in_obj.insert("modMatrix", modmatrix_obj);
     in_doc.setObject(in_obj);
 
-    auto in_bytes_normalized = in_doc.toJson(QJsonDocument::JsonFormat::Indented);
+    in_bytes_normalized = in_doc.toJson(QJsonDocument::JsonFormat::Indented);
     in_file.close();
 
     /*** Parse A into Preset P ***/
@@ -92,31 +91,39 @@ void TestPresetParser::test_parse_serialize()
 
     /*** Serialize P into B ***/
     QJsonDocument out_doc(preset->serialize());
-    QByteArray out_bytes = out_doc.toJson(QJsonDocument::JsonFormat::Indented);
+    delete preset;
+    out_bytes = out_doc.toJson(QJsonDocument::JsonFormat::Indented);
 
-    /*** Diff A vs. B ***/
-    QTemporaryFile a;
-    a.open();
-    QVERIFY(a.isOpen());
-    a.write(in_bytes_normalized);
-    a.close();
+    if (in_bytes_normalized != out_bytes) {
+        std::cerr << diff(in_bytes_normalized, out_bytes).toStdString() << std::endl;
+    }
 
-    QTemporaryFile b;
-    b.open();
-    QVERIFY(b.isOpen());
-    b.write(out_bytes);
-    b.close();
+    QVERIFY(in_bytes_normalized == out_bytes);
+}
+
+QString TestPresetParser::diff(const QByteArray& a, const QByteArray& b) {
+    QTemporaryFile temp_a;
+    temp_a.open();
+    temp_a.write(a);
+    temp_a.close();
+
+    QTemporaryFile temp_b;
+    temp_b.open();
+    temp_b.write(b);
+    temp_b.close();
 
     QProcess process;
-    process.start("/usr/bin/diff", {"-u", a.fileName(), b.fileName()});
-    process.waitForFinished();
-    if (process.exitCode() == 0) {
-        // OK
+    process.start("/usr/bin/diff", {"-u", temp_a.fileName(), temp_b.fileName()});
+    if (process.waitForStarted()) {
+        process.waitForFinished();
+        if (process.exitCode() == 0) {
+            return "";
+        } else {
+            return process.readAllStandardOutput();
+        }
     } else {
-        // Note: std::cerr is only visible with `ctest --verbose`
-        QByteArray diff = process.readAllStandardOutput();
-        std::cerr << diff.toStdString() << std::endl;
-        QVERIFY(false);
+        qInfo() << "Non-fatal error in QProcess:" << process.errorString();
+        return "";
     }
 }
 

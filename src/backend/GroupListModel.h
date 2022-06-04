@@ -1,7 +1,6 @@
 // SPDX-License-Identifier: GPL-3.0-only
 // SPDX-FileCopyrightText: 2022 Wolfgang Frisch
-#ifndef GROUPLISTMODEL_H
-#define GROUPLISTMODEL_H
+#pragma once
 
 #include <QAbstractListModel>
 #include <QObject>
@@ -28,4 +27,3 @@ protected:
     QStringList m_groups;
 };
 
-#endif // GROUPLISTMODEL_H

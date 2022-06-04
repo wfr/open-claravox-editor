@@ -57,7 +57,6 @@ RoundPane {
 
         Pane {
             id: pane
-//            padding: 12
             background: Rectangle {
                 radius: root.radius
             }

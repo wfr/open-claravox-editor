@@ -43,9 +43,9 @@ private:
     //
     // Why? The backend does not discern where parameter changes originate.
     // The backend fires a change event whenever a parameter is changed,
-    // be it due to user interaction with the GUI, or due to the physically controlling the instrument.
-    // This is not a problem per se, but it leads to unnecessary echoed MIDI messages:
-    // Instrument ---> MIDI/IN ---> Backend ---> MIDI/OUT ---> Instrument.
+    // be it due to user interaction with the GUI, or after a physical interaction with the instrument.
+    // This is not a problem per se, but it causes unnecessary outgoing MIDI spam:
+    // Instrument ---> MIDI IN ---> Backend ---> MIDI OUT ---> Instrument.
     // In order to avoid these echoes, we track some of the instrument's state.
     // Maybe not the most elegant solution but it's good enough for now.
     //

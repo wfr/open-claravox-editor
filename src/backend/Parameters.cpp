@@ -17,8 +17,6 @@ Parameters::Parameters(QObject *parent) : QObject(parent)
 //        QMetaProperty metaProp = metaObj->property(i);
 //    }
 
-    // Please let me know if you know how to connect QMetaMethod to a slot.
-    // Until then, this will have to do.
     connect(this, &Parameters::brightValChanged, this, [this]() { emitPropertyChanged("brightVal"); });
     connect(this, &Parameters::delayAmountChanged, this, [this]() { emitPropertyChanged("delayAmount"); });
     connect(this, &Parameters::feedbackValChanged, this, [this]() { emitPropertyChanged("feedbackVal"); });
@@ -60,7 +58,6 @@ Parameters::Parameters(QObject *parent) : QObject(parent)
 }
 
 void Parameters::emitPropertyChanged(const QString& property_name) {
-//    qDebug() << "Parameters::onPropertyChanged(" << property_name << ")";
     emit propertyChanged(property_name);
 }
 

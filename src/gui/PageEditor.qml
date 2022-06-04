@@ -3,7 +3,6 @@
 import QtQuick 2.15
 import QtQuick.Window 2.15
 import QtQuick.Controls 2.15
-//import QtQuick.Extras 1.4
 import QtQuick.Controls.Material 2.0
 import QtQuick.Layouts 1.0
 import QtQml.Models 2.15
@@ -19,8 +18,6 @@ ColumnLayout {
     Flickable {
         clip: true
 
-//        height: parent.height
-//        height: parent.height - modAssignments.height
         Layout.fillHeight: true
         Layout.fillWidth: true
 

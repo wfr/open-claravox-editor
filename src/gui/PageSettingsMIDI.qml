@@ -4,7 +4,6 @@ import QtQuick 2.15
 import QtQuick.Layouts 1.15
 import QtQuick.Window 2.12
 import QtQuick.Controls 2.15
-//import QtQuick.Extras 1.4
 import QtQuick.Controls.Material 2.0
 import QtQuick.Layouts 1.0
 import QtQml.Models 2.15
@@ -19,7 +18,6 @@ import Claravox.Backend 1.0
 ColumnLayout {
     x: 0
     y: 0
-    //        anchors.fill: parent
 
     SectionLabel {
         text: qsTr("MIDI IN/OUT SETTINGS")

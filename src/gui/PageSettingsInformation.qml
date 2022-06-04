@@ -4,7 +4,6 @@ import QtQuick 2.15
 import QtQuick.Layouts 1.15
 import QtQuick.Window 2.12
 import QtQuick.Controls 2.15
-//import QtQuick.Extras 1.4
 import QtQuick.Controls.Material 2.0
 import QtQuick.Layouts 1.0
 import QtQml.Models 2.15
@@ -78,8 +77,6 @@ Item {
             }
             Flickable {
                 height: 120
-                // QTBUG-56075 mediocre mitigation:
-//                maximumFlickVelocity: 500
                 Layout.fillWidth: true
                 flickableDirection: Flickable.VerticalFlick
                 boundsMovement: Flickable.StopAtBounds
@@ -101,8 +98,6 @@ Item {
             }
             Flickable {
                 height: 120
-                // QTBUG-56075 mediocre mitigation:
-//                maximumFlickVelocity: 500
                 Layout.fillWidth: true
                 flickableDirection: Flickable.VerticalFlick
                 boundsMovement: Flickable.StopAtBounds

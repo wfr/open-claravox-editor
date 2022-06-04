@@ -9,7 +9,7 @@
 /*!
  * \brief The FilteredPresetListModel provides a filtered view of a PresetListModel.
  *        It aims to behave exactly like Moog's original editor.
- *        The multiple filter options are chained with an OR relationship,
+ *        All filters are combined with logical OR.
  *        e.g. [Favorites] + [Moog] shows both all favorite _and_ all Moog presets.
  */
 class FilteredPresetListModel : public QSortFilterProxyModel

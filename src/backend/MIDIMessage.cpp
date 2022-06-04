@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: GPL-3.0-only
+// SPDX-FileCopyrightText: 2022 Wolfgang Frisch
 #include "MIDIMessage.h"
 #include <exception>
 #include <algorithm>

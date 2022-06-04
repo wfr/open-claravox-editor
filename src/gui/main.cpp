@@ -34,9 +34,6 @@ Claravox claravox;
 
 
 void sendval(const QString& name, double val) {
-//    static std::map<QString, std::deque<double>> limiter;
-//    std::deque<double> queue = limiter.at(name);
-
     auto param = mpFromName(name);
     if (!param.has_value()) {
         throw std::runtime_error("sendval: invalid name");

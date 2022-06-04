@@ -21,16 +21,13 @@ ColumnLayout {
         Layout.fillHeight: true
         Layout.fillWidth: true
 
-//        contentHeight: flow1.childrenRect.height
         contentHeight: editorContents.childrenRect.height
         bottomMargin: 16
 
         // Fixed-width layout (like Moog)
         // ... this could be configurable in the future.
-//        width: 1050
         width: parent.width
 //        anchors.centerIn: parent
-//        contentWidth: 1050
 
         // Alternative flowing layout
         // ... allows the editor to fit the screen without scrolling
@@ -48,9 +45,6 @@ ColumnLayout {
             id: scrollBar
             policy: ScrollBar.AlwaysOn
         }
-
-//        maximumFlickVelocity: 1500 // workaround for QTBUG-56075
-//        flickDeceleration: 5000
 
         Item {
             id: wrapper

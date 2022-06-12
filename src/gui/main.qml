@@ -183,6 +183,18 @@ ApplicationWindow {
         }
     }
     Shortcut {
+        sequence: "Up"
+        onActivated: {
+            buttonPrev.clicked()
+        }
+    }
+    Shortcut {
+        sequence: "Down"
+        onActivated: {
+            buttonNext.clicked()
+        }
+    }
+    Shortcut {
         sequence: "Alt+1"
         onActivated: {
             tabButton0.checked = true

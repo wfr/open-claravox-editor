@@ -18,7 +18,7 @@ Backend::Backend(QObject *parent) :
     m_presets = new PresetListModel(this);
     m_tags = new TagListModel(this, m_presets);
     m_groups = new GroupListModel(this, m_presets);
-    m_filtered_presets = new FilteredPresetListModel();
+    m_filtered_presets = new SortFilterPresetListModel();
     m_filtered_presets->setSourceModel(m_presets);
     m_presets->setFavorites(settings().value("favorites", QStringList()).toStringList(), false);
     m_ui_accent_color = settings().value("uiAccentColor", "#E91E63").toString(); // default Material.Pink

@@ -11,7 +11,7 @@
 #include "PresetListModel.h"
 #include "TagListModel.h"
 #include "GroupListModel.h"
-#include "FilteredPresetListModel.h"
+#include "SortFilterPresetListModel.h"
 
 class Backend : public QObject
 {
@@ -24,7 +24,7 @@ class Backend : public QObject
     Q_PROPERTY(Preset* currentPreset READ currentPreset NOTIFY currentPresetChanged)
     Q_PROPERTY(int currentPresetIndex READ currentPresetIndex NOTIFY currentPresetIndexChanged)
     Q_PROPERTY(bool currentPresetModified MEMBER m_current_preset_modified NOTIFY currentPresetModified)
-    Q_PROPERTY(FilteredPresetListModel* filteredPresets MEMBER m_filtered_presets NOTIFY filteredPresetsChanged)
+    Q_PROPERTY(SortFilterPresetListModel* filteredPresets MEMBER m_filtered_presets NOTIFY filteredPresetsChanged)
     Q_PROPERTY(int currentFilteredPresetIndex READ currentFilteredPresetIndex WRITE setFilteredPresetIndex NOTIFY currentFilteredPresetIndexChanged)
     // maybe move to a dedicated Preferences model?
     Q_PROPERTY(QString uiAccentColor MEMBER m_ui_accent_color NOTIFY uiAccentColorChanged)
@@ -112,7 +112,7 @@ private:
     Preset* m_current_preset;
     int m_current_preset_index;
     bool m_current_preset_modified;
-    FilteredPresetListModel* m_filtered_presets;
+    SortFilterPresetListModel* m_filtered_presets;
     QString m_ui_accent_color;
     bool m_ui_warn_unsaved_changes;
     int m_midi_channel_in;

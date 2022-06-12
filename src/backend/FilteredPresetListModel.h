@@ -35,4 +35,6 @@ protected:
     bool m_filter_favorites = false;
     QSet<QString> m_groups;
     QSet<QString> m_tags;
+
+    virtual bool lessThan(const QModelIndex &source_left, const QModelIndex &source_right) const;
 };

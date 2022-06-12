@@ -5,7 +5,9 @@
 
 FilteredPresetListModel::FilteredPresetListModel()
 {
-
+    setSortRole(PresetListModel::ModelRoles::NameRole);
+    setDynamicSortFilter(true);
+    sort(0, Qt::AscendingOrder);
 }
 
 bool FilteredPresetListModel::filterAcceptsRow(int sourceRow, const QModelIndex &sourceParent) const {
@@ -84,4 +86,10 @@ void FilteredPresetListModel::setFilterTag(const QString& tag, bool state) {
         m_tags.remove(tag);
         invalidateFilter();
     }
+}
+
+bool FilteredPresetListModel::lessThan(const QModelIndex &source_left, const QModelIndex &source_right) const {
+    QVariant leftName = source_left.data(PresetListModel::NameRole);
+    QVariant rightName = source_right.data(PresetListModel::NameRole);
+    return leftName.toString() < rightName.toString();
 }

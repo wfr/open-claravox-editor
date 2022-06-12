@@ -102,9 +102,15 @@ Q_INVOKABLE int PresetListModel::findRow(const Preset* needle) {
     return -1;
 }
 
-void PresetListModel::insertPreset(int row, const Preset* preset, const QString& new_name) {
+void PresetListModel::insertPreset(int row, Preset* preset) {
     beginInsertRows(QModelIndex(), row, row);
-    Preset* new_preset = m_presets[row]->clone();
+    m_presets.insert(row, preset);
+    endInsertRows();
+}
+
+void PresetListModel::insertPresetClone(int row, const Preset* preset, const QString& new_name) {
+    beginInsertRows(QModelIndex(), row, row);
+    Preset* new_preset = m_presets[row]->copy();
     new_preset->setName(new_name);
     m_presets.insert(row, new_preset);
     endInsertRows();

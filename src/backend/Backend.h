@@ -77,6 +77,7 @@ public:
     Q_INVOKABLE void selectPreset(const QString& name);
     Q_INVOKABLE bool renameCurrentPreset(const QString& new_name);
     Q_INVOKABLE void saveCurrentPreset();
+    Q_INVOKABLE void cloneCurrentPreset(bool save = true);
 
     Q_INVOKABLE QString appChangelog();
     Q_INVOKABLE QString presetsFolderURL();

@@ -50,6 +50,9 @@ ApplicationWindow {
             anchors.fill: parent
             ToolButton {
                 text: qsTr("CLONE")
+                onClicked: {
+                    Backend.cloneCurrentPreset()
+                }
             }
             ToolButton {
                 text: qsTr("SAVE")

@@ -42,8 +42,23 @@ QJsonObject Preset::serialize() const {
     return result;
 }
 
-Preset* Preset::clone() {
+Preset* Preset::copy() {
     auto p = new Preset(parent());
     p->parse(serialize());
     return p;
+}
+
+QString Preset::getCloneName(int n) const {
+    QString name;
+    QString nstr = QString::asprintf("%d", n);
+    QRegExp rx(R"(^(.*) ([0-9]+))");
+    if (rx.indexIn(m_name) != -1) {
+        name = rx.cap(1);
+    } else {
+        name = m_name;
+    }
+    if (name.length() > 19 - nstr.length() - 1) {
+        name = name.left(19 - nstr.length() - 1);
+    }
+    return name + " " + nstr;
 }

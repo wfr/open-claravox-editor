@@ -176,16 +176,43 @@ bool Backend::renameCurrentPreset(const QString& new_name) {
     return true;
 }
 
-
 void Backend::saveCurrentPreset() {
     if (!m_current_preset_modified) {
         return;
     }
-    if (currentPreset()->isFactory()) {
-        // auto-generate a name
-        // TOOD: check existing names
-        QString new_name = currentPreset()->name() + "1";
-        m_presets->insertPreset(m_current_preset_index, currentPreset(), new_name);
+    Preset* p = currentPreset();
+    if (p->isFactory()) {
+        cloneCurrentPreset(false);
+        p = currentPreset();
+    }
+    QJsonDocument doc(p->serialize());
+    QString preset_path = QDir(presetsPath()).absoluteFilePath(p->name() + ".mpr");
+    qDebug() << "Saving preset to:" << preset_path;
+    auto f = QFile(preset_path);
+    if (!f.open(QIODevice::ReadWrite | QIODevice::Truncate)) {
+        throw new std::runtime_error(std::string("failed to write preset: ") + preset_path.toStdString());
+    }
+    f.write(doc.toJson(QJsonDocument::Indented));
+    f.close();
+    m_current_preset_modified = false;
+    emit currentPresetModified();
+}
+
+void Backend::cloneCurrentPreset(bool save) {
+    Preset* p = currentPreset()->copy();
+    QString name;
+    int n = 0;
+    while (!Preset::isValidName(name) || m_presets->byName(name) != nullptr) {
+        n++;
+        name = p->getCloneName(n);
+    }
+    p->setName(name);
+    p->setGroupToUser();
+    m_presets->insertPreset(m_current_preset_index + 1, p);
+    m_current_preset_index++;
+    emit currentPresetIndexChanged();
+    if (save) {
+        saveCurrentPreset();
     }
 }
 

@@ -24,7 +24,7 @@ public:
 
     bool parse(const QJsonObject& obj);
     QJsonObject serialize() const;
-    Preset* clone();
+    Preset* copy();
 
     QString name() const {
         return m_name;
@@ -44,8 +44,15 @@ public:
         }
     }
 
+    QString getCloneName(int n) const;
+
     QString group() const {
         return m_group;
+    }
+
+    void setGroupToUser() {
+        m_group = "User";
+        emit groupChanged();
     }
 
     QString tagString() const {

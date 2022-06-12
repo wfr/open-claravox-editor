@@ -236,6 +236,7 @@ void Backend::cloneCurrentPreset(bool save) {
     m_presets->insertPreset(m_current_preset_index + 1, p);
     selectPreset(name);
     if (save) {
+        m_current_preset_modified = true;
         saveCurrentPreset();
     }
 }

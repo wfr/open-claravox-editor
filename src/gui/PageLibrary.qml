@@ -359,6 +359,10 @@ Item {
                         }
                         Button {
                             text: "Delete"
+                            onClicked: {
+                                // TODO: confirmation dialog
+                                Backend.deleteCurrentPreset();
+                            }
                         }
                     }
                 }

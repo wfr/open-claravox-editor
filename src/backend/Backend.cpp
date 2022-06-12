@@ -81,7 +81,7 @@ Backend::Backend(QObject *parent) :
 }
 
 
-QString Backend::presetsPath() {
+QString Backend::presetsDir() {
     QDir config_dir = QFileInfo(settings().fileName()).dir();
     QString presets_path = config_dir.filePath("Presets");
     if (!QDir(presets_path).exists()) {
@@ -92,8 +92,12 @@ QString Backend::presetsPath() {
     return presets_path;
 }
 
+QString Backend::presetPath(const Preset* p) {
+    return QDir(presetsDir()).absoluteFilePath(p->name() + ".mpr");
+}
+
 void Backend::copyFactoryPresets() {
-    QDir presets_dir = QDir(presetsPath());
+    QDir presets_dir = QDir(presetsDir());
     qDebug() << "Copying factory presets to:" << presets_dir.path();
     auto factory_presets_dir = QDir(":/backend/factory-presets");
     for (auto fileinfo : factory_presets_dir.entryInfoList()) {
@@ -117,7 +121,7 @@ void Backend::copyFactoryPresets() {
 }
 
 void Backend::loadPresets() {
-    QDir presets_dir = QDir(presetsPath());
+    QDir presets_dir = QDir(presetsDir());
     qDebug() << "Reading presets from:" << presets_dir.path();
     presets_dir.setNameFilters({"*.mpr"});
     for (auto fileinfo : presets_dir.entryInfoList()) {
@@ -160,7 +164,25 @@ void Backend::selectPreset(const QString& name) {
     }
 }
 
+void Backend::deleteCurrentPreset() {
+    if (m_presets->rowCount() <= 1) {
+        // TODO: let the user delete the last preset
+        return;
+    }
+    QString preset_path = presetPath(currentPreset());
+    QFile(preset_path).remove();
+    qDebug() << "Deleted" << preset_path;
+    m_presets->deletePreset(m_current_preset_index);
+
+    int new_index = std::max(0, m_current_preset_index - 1);
+    selectPreset(m_presets->byIndex(new_index)->name());
+}
+
 bool Backend::renameCurrentPreset(const QString& new_name) {
+    if (currentPreset()->isFactory()) {
+        qDebug() << "can't rename factory presets";
+        return false;
+    }
     if (currentPreset()->name() == new_name) {
         qDebug() << "renameCurrentPreset failed: old and new name are identical";
         return false;
@@ -173,6 +195,8 @@ bool Backend::renameCurrentPreset(const QString& new_name) {
     int row = m_presets->findRow(m_current_preset);
     m_presets->setData(m_presets->index(row, 0), new_name, PresetListModel::NameRole);
     m_current_preset->setName(new_name);
+    m_current_preset_modified = true;
+    saveCurrentPreset();
     return true;
 }
 
@@ -186,7 +210,7 @@ void Backend::saveCurrentPreset() {
         p = currentPreset();
     }
     QJsonDocument doc(p->serialize());
-    QString preset_path = QDir(presetsPath()).absoluteFilePath(p->name() + ".mpr");
+    QString preset_path = presetPath(p);
     qDebug() << "Saving preset to:" << preset_path;
     auto f = QFile(preset_path);
     if (!f.open(QIODevice::ReadWrite | QIODevice::Truncate)) {
@@ -209,8 +233,7 @@ void Backend::cloneCurrentPreset(bool save) {
     p->setName(name);
     p->setGroupToUser();
     m_presets->insertPreset(m_current_preset_index + 1, p);
-    m_current_preset_index++;
-    emit currentPresetIndexChanged();
+    selectPreset(name);
     if (save) {
         saveCurrentPreset();
     }
@@ -233,5 +256,5 @@ Q_INVOKABLE QString Backend::appChangelog() {
 }
 
 Q_INVOKABLE QString Backend::presetsFolderURL() {
-    return QUrl::fromLocalFile(presetsPath()).toString();
+    return QUrl::fromLocalFile(presetsDir()).toString();
 }

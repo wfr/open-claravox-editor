@@ -116,6 +116,13 @@ void PresetListModel::insertPresetClone(int row, const Preset* preset, const QSt
     endInsertRows();
 }
 
+void PresetListModel::deletePreset(int row) {
+    beginRemoveRows(QModelIndex(), row, row);
+    m_presets.removeOne(byIndex(row));
+    removeRow(row);
+    endRemoveRows();
+}
+
 void PresetListModel::setFavorite(const QString& name, bool state) {
     // Q: should we use setData() instead?
     Preset* preset = byName(name);

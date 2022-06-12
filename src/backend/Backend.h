@@ -75,6 +75,7 @@ public:
     }
 
     Q_INVOKABLE void selectPreset(const QString& name);
+    Q_INVOKABLE void deleteCurrentPreset();
     Q_INVOKABLE bool renameCurrentPreset(const QString& new_name);
     Q_INVOKABLE void saveCurrentPreset();
     Q_INVOKABLE void cloneCurrentPreset(bool save = true);
@@ -119,7 +120,8 @@ private:
     int m_midi_channel_app;
     int m_midi_output_resolution;
 
-    QString presetsPath();
+    QString presetsDir();
+    QString presetPath(const Preset* p);
     void copyFactoryPresets();
     void loadPresets();
 };

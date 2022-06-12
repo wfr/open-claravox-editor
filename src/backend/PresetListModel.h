@@ -43,6 +43,7 @@ public:
 
     void insertPreset(int row, Preset* preset);
     void insertPresetClone(int row, const Preset* preset, const QString& new_name);
+    void deletePreset(int row);
     Q_INVOKABLE void setFavorite(const QString& name, bool state);
     Q_INVOKABLE void toggleFavorite(const QString& name);
     bool isFavorite(const QString& name);

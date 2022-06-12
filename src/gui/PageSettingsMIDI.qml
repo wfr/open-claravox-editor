@@ -82,6 +82,7 @@ ColumnLayout {
                     flat: false
                     onClicked: {
                     }
+                    enabled: false // TODO
                 }
 
                 Button {
@@ -95,6 +96,7 @@ ColumnLayout {
                     flat: false
                     onClicked: {
                     }
+                    enabled: false // TODO
                 }
             }
         }

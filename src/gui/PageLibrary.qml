@@ -47,11 +47,12 @@ Item {
                     Button {
                         id: buttonNewPreset
                         text: qsTr("New Preset +")
+                        enabled: false // TODO
                     }
                     Button {
                         id: buttonReceiveTimbre
                         text: qsTr("Receive Timbre 1")
-                        enabled: false
+                        enabled: false // TODO
                     }
                 }
 

@@ -45,6 +45,7 @@ QJsonObject Preset::serialize() const {
 Preset* Preset::copy() {
     auto p = new Preset(parent());
     p->parse(serialize());
+    p->m_last_modified = QDateTime::currentDateTime();
     return p;
 }
 

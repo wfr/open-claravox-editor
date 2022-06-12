@@ -20,6 +20,8 @@ Backend::Backend(QObject *parent) :
     m_groups = new GroupListModel(this, m_presets);
     m_filtered_presets = new SortFilterPresetListModel();
     m_filtered_presets->setSourceModel(m_presets);
+    m_sorted_presets = new SortFilterPresetListModel();
+    m_sorted_presets->setSourceModel(m_presets);
     m_presets->setFavorites(settings().value("favorites", QStringList()).toStringList(), false);
     m_ui_accent_color = settings().value("uiAccentColor", "#E91E63").toString(); // default Material.Pink
     m_ui_warn_unsaved_changes = settings().value("uiWarnUnsavedChanges", true).toBool();
@@ -52,7 +54,9 @@ Backend::Backend(QObject *parent) :
 
     connect(m_presets, &PresetListModel::dataChanged, [this]() {
         m_filtered_presets->invalidate();
+        m_sorted_presets->invalidate();
         emit currentFilteredPresetIndexChanged();
+        emit currentSortedPresetIndexChanged();
     });
 
     connect(this, &Backend::uiAccentColorChanged, [this]() {
@@ -160,6 +164,7 @@ void Backend::selectPreset(const QString& name) {
         emit currentPresetChanged();
         emit currentPresetIndexChanged();
         emit currentFilteredPresetIndexChanged();
+        emit currentSortedPresetIndexChanged();
         emit currentPresetModified();
     }
 }

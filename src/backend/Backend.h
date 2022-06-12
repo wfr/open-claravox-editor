@@ -26,6 +26,8 @@ class Backend : public QObject
     Q_PROPERTY(bool currentPresetModified MEMBER m_current_preset_modified NOTIFY currentPresetModified)
     Q_PROPERTY(SortFilterPresetListModel* filteredPresets MEMBER m_filtered_presets NOTIFY filteredPresetsChanged)
     Q_PROPERTY(int currentFilteredPresetIndex READ currentFilteredPresetIndex WRITE setFilteredPresetIndex NOTIFY currentFilteredPresetIndexChanged)
+    Q_PROPERTY(SortFilterPresetListModel* sortedPresets MEMBER m_sorted_presets NOTIFY sortedPresetsChanged)
+    Q_PROPERTY(int currentSortedPresetIndex READ currentSortedPresetIndex WRITE setSortedPresetIndex NOTIFY currentSortedPresetIndexChanged)
     // maybe move to a dedicated Preferences model?
     Q_PROPERTY(QString uiAccentColor MEMBER m_ui_accent_color NOTIFY uiAccentColorChanged)
     Q_PROPERTY(bool uiWarnUnsavedChanges MEMBER m_ui_warn_unsaved_changes NOTIFY uiWarnUnsavedChangesChanged)
@@ -74,6 +76,18 @@ public:
         selectPreset(m_presets->byIndex(src_idx)->name());
     }
 
+    int currentSortedPresetIndex() {
+        QModelIndex src_idx = m_presets->index(currentPresetIndex());
+        int dst_idx = m_sorted_presets->mapFromSource(src_idx).row();
+        return dst_idx;
+    }
+
+    void setSortedPresetIndex(int idx) {
+        QModelIndex dst_idx = m_sorted_presets->index(idx, 0);
+        int src_idx = m_sorted_presets->mapToSource(dst_idx).row();
+        selectPreset(m_presets->byIndex(src_idx)->name());
+    }
+
     Q_INVOKABLE void selectPreset(const QString& name);
     Q_INVOKABLE void deleteCurrentPreset();
     Q_INVOKABLE bool renameCurrentPreset(const QString& new_name);
@@ -96,6 +110,8 @@ signals:
     void currentPresetModified();
     void filteredPresetsChanged();
     void currentFilteredPresetIndexChanged();
+    void sortedPresetsChanged();
+    void currentSortedPresetIndexChanged();
     void uiAccentColorChanged();
     void uiWarnUnsavedChangesChanged();
     void midiChannelInChanged();
@@ -112,7 +128,8 @@ private:
     Preset* m_current_preset;
     int m_current_preset_index;
     bool m_current_preset_modified;
-    SortFilterPresetListModel* m_filtered_presets;
+    SortFilterPresetListModel* m_filtered_presets; // Library view
+    SortFilterPresetListModel* m_sorted_presets; // ComboBox and Prev/Next
     QString m_ui_accent_color;
     bool m_ui_warn_unsaved_changes;
     int m_midi_channel_in;

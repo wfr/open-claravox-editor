@@ -50,6 +50,9 @@ ApplicationWindow {
             anchors.fill: parent
             ToolButton {
                 text: qsTr("CLONE")
+                onClicked: {
+                    Backend.cloneCurrentPreset()
+                }
             }
             ToolButton {
                 text: qsTr("SAVE")
@@ -61,18 +64,15 @@ ApplicationWindow {
             ComboBox {
                 id: comboBoxPreset
                 Layout.fillWidth: true
-                model: Backend.presets
-                currentIndex: Backend.currentPresetIndex
+                model: Backend.sortedPresets
+                currentIndex: Backend.currentSortedPresetIndex
                 textRole: "name"
                 displayText: currentText + (Backend.currentPresetModified ? " *" : "")
 //                font.italic: Backend.currentPresetModified
                 font.pointSize: 12
                 onCurrentIndexChanged: {
-                    console.log("Selected preset index", currentIndex);
-                    let name = Backend.presets.byIndex(currentIndex).name;
-                    if (name.length > 0) {
-                        Backend.selectPreset(name);
-                    }
+                    console.log("Selected (sorted) preset index", currentIndex);
+                    Backend.currentSortedPresetIndex = currentIndex;
                 }
 
                 function decrement() {

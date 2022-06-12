@@ -7,16 +7,16 @@
 #include <QSet>
 
 /*!
- * \brief The FilteredPresetListModel provides a filtered view of a PresetListModel.
+ * \brief The SortFilterPresetListModel provides a filtered view of a PresetListModel.
  *        It aims to behave exactly like Moog's original editor.
  *        All filters are combined with logical OR.
  *        e.g. [Favorites] + [Moog] shows both all favorite _and_ all Moog presets.
  */
-class FilteredPresetListModel : public QSortFilterProxyModel
+class SortFilterPresetListModel : public QSortFilterProxyModel
 {
     Q_OBJECT
 public:
-    FilteredPresetListModel();
+    SortFilterPresetListModel();
 
     bool filterAcceptsRow(int sourceRow, const QModelIndex &sourceParent) const override;
 
@@ -35,4 +35,6 @@ protected:
     bool m_filter_favorites = false;
     QSet<QString> m_groups;
     QSet<QString> m_tags;
+
+    virtual bool lessThan(const QModelIndex &source_left, const QModelIndex &source_right) const;
 };

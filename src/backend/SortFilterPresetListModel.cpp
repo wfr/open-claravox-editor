@@ -1,14 +1,16 @@
 // SPDX-License-Identifier: GPL-3.0-only
 // SPDX-FileCopyrightText: 2022 Wolfgang Frisch
-#include "FilteredPresetListModel.h"
+#include "SortFilterPresetListModel.h"
 #include <PresetListModel.h>
 
-FilteredPresetListModel::FilteredPresetListModel()
+SortFilterPresetListModel::SortFilterPresetListModel()
 {
-
+    setSortRole(PresetListModel::ModelRoles::NameRole);
+    setDynamicSortFilter(true);
+    sort(0, Qt::AscendingOrder);
 }
 
-bool FilteredPresetListModel::filterAcceptsRow(int sourceRow, const QModelIndex &sourceParent) const {
+bool SortFilterPresetListModel::filterAcceptsRow(int sourceRow, const QModelIndex &sourceParent) const {
     PresetListModel* source = dynamic_cast<PresetListModel*>(sourceModel());
     Preset* preset = source->byIndex(sourceRow);
 
@@ -37,14 +39,14 @@ bool FilteredPresetListModel::filterAcceptsRow(int sourceRow, const QModelIndex 
 }
 
 
-void FilteredPresetListModel::setFilterFavorites(bool state) {
+void SortFilterPresetListModel::setFilterFavorites(bool state) {
     if (m_filter_favorites != state) {
         m_filter_favorites = state;
         invalidateFilter();
     }
 }
 
-void FilteredPresetListModel::setFilterGroups(const QStringList& groups) {
+void SortFilterPresetListModel::setFilterGroups(const QStringList& groups) {
     QSet<QString> set;
     for (const QString& group : groups) {
         set.insert(group);
@@ -55,7 +57,7 @@ void FilteredPresetListModel::setFilterGroups(const QStringList& groups) {
     }
 }
 
-void FilteredPresetListModel::setFilterGroup(const QString& group, bool state) {
+void SortFilterPresetListModel::setFilterGroup(const QString& group, bool state) {
     if (state && !m_groups.contains(group)) {
         m_groups.insert(group);
         invalidateFilter();
@@ -65,7 +67,7 @@ void FilteredPresetListModel::setFilterGroup(const QString& group, bool state) {
     }
 }
 
-void FilteredPresetListModel::setFilterTags(const QStringList& tags) {
+void SortFilterPresetListModel::setFilterTags(const QStringList& tags) {
     QSet<QString> set;
     for (const QString& tag : tags) {
         set.insert(tag);
@@ -76,7 +78,7 @@ void FilteredPresetListModel::setFilterTags(const QStringList& tags) {
     }
 }
 
-void FilteredPresetListModel::setFilterTag(const QString& tag, bool state) {
+void SortFilterPresetListModel::setFilterTag(const QString& tag, bool state) {
     if (state && !m_tags.contains(tag)) {
         m_tags.insert(tag);
         invalidateFilter();
@@ -84,4 +86,10 @@ void FilteredPresetListModel::setFilterTag(const QString& tag, bool state) {
         m_tags.remove(tag);
         invalidateFilter();
     }
+}
+
+bool SortFilterPresetListModel::lessThan(const QModelIndex &source_left, const QModelIndex &source_right) const {
+    QVariant leftName = source_left.data(PresetListModel::NameRole);
+    QVariant rightName = source_right.data(PresetListModel::NameRole);
+    return leftName.toString() < rightName.toString();
 }

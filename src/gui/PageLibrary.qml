@@ -51,6 +51,7 @@ Item {
                     Button {
                         id: buttonReceiveTimbre
                         text: qsTr("Receive Timbre 1")
+                        enabled: false
                     }
                 }
 
@@ -312,16 +313,15 @@ Item {
                             TextInput {
                                 text: Backend.currentPreset.name
                                 font.pointSize: 16
-                                color: Material.primaryTextColor
+//                                color: Material.primaryTextColor
                                 validator: RegularExpressionValidator { regularExpression: /^[0-9A-Za-z +$^]{1,19}$/ }
                                 onAccepted: {
                                     Backend.renameCurrentPreset(text);
                                     text = Backend.currentPreset.name
                                 }
-                            }
-                            Button {
-                                text: "Edit"
-            //                    visible: !Backend.currentPreset.isFactory
+                                enabled: !Backend.currentPreset.isFactory
+                                color: Backend.currentPreset.isFactory ?
+                                           Material.secondaryTextColor : Material.primaryTextColor
                             }
                         }
                     }
@@ -359,6 +359,10 @@ Item {
                         }
                         Button {
                             text: "Delete"
+                            onClicked: {
+                                // TODO: confirmation dialog
+                                Backend.deleteCurrentPreset();
+                            }
                         }
                     }
                 }

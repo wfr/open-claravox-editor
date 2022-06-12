@@ -71,7 +71,7 @@ int main(int argc, char *argv[])
     qmlRegisterUncreatableType<PresetListModel,1>("Claravox.PresetListModel",1,0,"PresetListModel","Failed to register QML PresetListModel");
     qmlRegisterUncreatableType<TagListModel,1>("Claravox.TagListModel",1,0,"TagListModel","Failed to register QML TagListModel");
     qmlRegisterUncreatableType<GroupListModel,1>("Claravox.GroupListModel",1,0,"GroupListModel","Failed to register QML GroupListModel");
-    qmlRegisterUncreatableType<FilteredPresetListModel,1>("Claravox.FilteredPresetListModel",1,0,"FilteredPresetListModel","Failed to register QML FilteredPresetListModel");
+    qmlRegisterUncreatableType<SortFilterPresetListModel,1>("Claravox.SortFilterPresetListModel",1,0,"SortFilterPresetListModel","Failed to register QML SortFilterPresetListModel");
     qmlRegisterSingletonInstance("Claravox.Backend", 1, 0, "Backend", backend);
 
     QObject::connect(backend->params(), &Parameters::pitchCurveValChanged, [](double val) {

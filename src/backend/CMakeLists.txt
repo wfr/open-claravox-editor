@@ -25,7 +25,7 @@ add_library(claravox-backend STATIC
     PresetListModel.cpp
     TagListModel.cpp
     GroupListModel.cpp
-    FilteredPresetListModel.cpp
+    SortFilterPresetListModel.cpp
     Util.cpp
     Mod.cpp
     ModMatrix.cpp
@@ -39,7 +39,7 @@ add_library(claravox-backend STATIC
     PresetListModel.h
     TagListModel.h
     GroupListModel.h
-    FilteredPresetListModel.h
+    SortFilterPresetListModel.h
     Util.h
     Mod.h
     ModMatrix.h

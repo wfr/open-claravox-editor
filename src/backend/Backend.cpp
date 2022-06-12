@@ -192,6 +192,7 @@ bool Backend::renameCurrentPreset(const QString& new_name) {
         return false;
     }
     qDebug() << "Renaming current preset to" << new_name;
+    QFile(presetPath(currentPreset())).remove();
     int row = m_presets->findRow(m_current_preset);
     m_presets->setData(m_presets->index(row, 0), new_name, PresetListModel::NameRole);
     m_current_preset->setName(new_name);

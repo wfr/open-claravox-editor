@@ -15,7 +15,7 @@ ApplicationWindow {
     //    visibility: Window.Maximized
     y: 0
     width: 1200
-    height: 900
+    height: 870
     visible: true
     title: qsTr("Open Claravox Editor")
 
@@ -159,6 +159,9 @@ ApplicationWindow {
         id: stackLayout
         currentIndex: 0
         anchors.fill: parent
+        anchors.leftMargin: 4
+        anchors.rightMargin: 4
+        anchors.topMargin: 4
 
         PageEditor {
         }

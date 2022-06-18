@@ -299,46 +299,63 @@ Item {
 
             RowLayout {
                 anchors.fill: parent
+                spacing: 32
 
                 // Left section
                 GridLayout {
                     columns: 2
-                    Layout.fillWidth: true
+                    Layout.preferredWidth: 770
+                    rowSpacing: 16
                     ColumnLayout {
+                        Layout.preferredWidth: 2
                         Layout.columnSpan: 2
                         SectionLabel {
                             text: "Loaded Preset Name"
                         }
                         RowLayout {
-                            Layout.columnSpan: 2
                             TextInput {
+                                id: presetNameTextInput
                                 text: Backend.currentPreset.name
-                                font.pointSize: 16
-//                                color: Material.primaryTextColor
+                                font.pointSize: 25
+                                Layout.fillWidth: true
                                 validator: RegularExpressionValidator { regularExpression: /^[0-9A-Za-z +$^]{1,19}$/ }
                                 onAccepted: {
                                     Backend.renameCurrentPreset(text);
                                     text = Backend.currentPreset.name
                                 }
                                 enabled: !Backend.currentPreset.isFactory
-                                color: Backend.currentPreset.isFactory ?
-                                           Material.secondaryTextColor : Material.primaryTextColor
+                                color: Material.primaryTextColor
+//                                color: Backend.currentPreset.isFactory ?
+//                                           Material.secondaryTextColor : Material.primaryTextColor
+                            }
+                            ToolButton {
+                                icon.source: "qrc:/icons/pen.png"
+                                visible: !Backend.currentPreset.isFactory
+                                onClicked: presetNameTextInput.focus = true
                             }
                         }
                     }
 
-                    Column {
+                    ColumnLayout {
+                        Layout.fillWidth: true
+                        Layout.preferredWidth: 1
+
                         SectionLabel {
                             text: "Save Date"
+                            Layout.fillWidth: true
                         }
                         Text {
                             text: Backend.currentPreset.lastModified
                             color: Material.primaryTextColor
                         }
                     }
-                    Column {
+                    ColumnLayout {
+//                        Layout.alignment: Qt.AlignLeft
+                        Layout.fillWidth: true
+                        Layout.preferredWidth: 1
                         SectionLabel {
                             text: "Group"
+                            Layout.fillWidth: true
                         }
                         Text {
                             text: Backend.currentPreset.group
@@ -346,6 +363,8 @@ Item {
                         }
                     }
                     RowLayout {
+                        Layout.fillWidth: true
+                        Layout.preferredWidth: 1
                         Button {
                             text: "Favorite"
                             onPressed: {
@@ -372,15 +391,26 @@ Item {
                 ColumnLayout {
                     Layout.preferredWidth: 250
                     spacing: 0
-                    SectionLabel {
-                        text: "Tags"
+                    Layout.alignment: Qt.AlignTop
+                    RowLayout {
+                        SectionLabel {
+                            text: "Tags"
+                            Layout.alignment: Qt.AlignTop
+                        }
+                        ToolButton {
+                            icon.source: "qrc:/icons/pen.png"
+                            visible: !Backend.currentPreset.isFactory
+                            enabled: false
+//                            onClicked: presetNameTextInput.focus = true
+                        }
                     }
                     Repeater {
                         model: Backend.currentPreset.tagList
                         Button {
                             text: model.display
                             Layout.fillWidth: true
-                            checkable: true
+//                            checkable: true
+                            enabled: false
                         }
                     }
                 }

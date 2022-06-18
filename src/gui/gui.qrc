@@ -33,6 +33,7 @@
         <file>PageSettingsGlobal.qml</file>
         <file>PageSettingsAppMIDI.qml</file>
         <file>PageEditorContents.qml</file>
+        <file>icons/pen.png</file>
     </qresource>
     <qresource prefix="/components"/>
     <qresource prefix="/pages"/>

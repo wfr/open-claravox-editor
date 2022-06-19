@@ -321,7 +321,6 @@ Item {
                                 validator: RegularExpressionValidator { regularExpression: /^[0-9A-Za-z +$^]{1,19}$/ }
                                 onAccepted: {
                                     Backend.renameCurrentPreset(text);
-                                    text = Backend.currentPreset.name
                                 }
                                 enabled: !Backend.currentPreset.isFactory
                                 color: Material.primaryTextColor

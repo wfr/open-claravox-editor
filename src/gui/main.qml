@@ -12,8 +12,6 @@ import Claravox.Backend 1.0
 
 ApplicationWindow {
     id: window
-    //    visibility: Window.Maximized
-    y: 0
     width: 1200
     height: 870
     visible: true

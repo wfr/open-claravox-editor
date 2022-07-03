@@ -399,18 +399,12 @@ Item {
                         ToolButton {
                             icon.source: "qrc:/icons/pen.png"
                             visible: !Backend.currentPreset.isFactory
-                            enabled: false
-//                            onClicked: presetNameTextInput.focus = true
+                            onClicked: tagEditor.editing = !tagEditor.editing
+                            Layout.alignment: Qt.AlignTop
                         }
                     }
-                    Repeater {
-                        model: Backend.currentPreset.tagList
-                        Button {
-                            text: model.display
-                            Layout.fillWidth: true
-//                            checkable: true
-                            enabled: false
-                        }
+                    TagEditor {
+                        id: tagEditor
                     }
                 }
             }

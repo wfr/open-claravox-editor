@@ -63,3 +63,24 @@ QString Preset::getCloneName(int n) const {
     }
     return name + " " + nstr;
 }
+
+Q_INVOKABLE bool Preset::setTag(const QString& tag, bool state) {
+    if (m_tags.contains(tag)) {
+        if (state) {
+            return false;
+        } else {
+            qDebug() << "Preset" << m_name << "-tag:" << tag;
+            m_tags.removeAll(tag);
+        }
+    } else {
+        if (m_tags.count() < MAX_TAGS) {
+            qDebug() << "Preset" << m_name << "+tag:" << tag;
+            m_tags.append(tag);
+        } else {
+            return false;
+        }
+    }
+    qDebug() << "Preset" << m_name << "tagList changed. New count:" << m_tags.count();
+    m_taglistmodel->setStringList(m_tags);
+    return true;
+}

@@ -34,6 +34,7 @@
         <file>PageSettingsAppMIDI.qml</file>
         <file>PageEditorContents.qml</file>
         <file>icons/pen.png</file>
+        <file>TagEditor.qml</file>
     </qresource>
     <qresource prefix="/components"/>
     <qresource prefix="/pages"/>

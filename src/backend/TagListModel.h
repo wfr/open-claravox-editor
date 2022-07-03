@@ -8,6 +8,8 @@
 
 class PresetListModel;
 
+/** ALL tags in ALL presets, sorted alphabetically.
+ *  Maybe should be renamed to AllTagsListModel or something. */
 class TagListModel : public QAbstractListModel
 {
     Q_OBJECT
@@ -26,4 +28,7 @@ public:
 protected:
     const PresetListModel* m_presets;
     QStringList m_tags;
+
+protected slots:
+    void refresh();
 };

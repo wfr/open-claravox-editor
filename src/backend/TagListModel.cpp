@@ -7,24 +7,8 @@ TagListModel::TagListModel(QObject *parent, const PresetListModel* presets)
     : QAbstractListModel{parent},
       m_presets(presets)
 {
-    connect(m_presets, &PresetListModel::rowsInserted, [this]() {
-        beginResetModel(); // TODO: optimize
-        QSet<QString> tagset;
-        const int row_count = m_presets->rowCount();
-        for (int row = 0; row < row_count; row++) {
-            QModelIndex index = m_presets->index(row, 0);
-            QStringList tag_list = index.data(PresetListModel::TagListRole).toStringList();
-            for (const QString& tag : tag_list) {
-                tagset.insert(tag);
-            }
-        }
-        m_tags.clear();
-        for (const QString& tag : tagset) {
-            m_tags << tag;
-        }
-        m_tags.sort();
-        endResetModel();
-    });
+    connect(m_presets, &PresetListModel::rowsInserted, this, &TagListModel::refresh);
+    connect(m_presets, &PresetListModel::tagsChanged, this, &TagListModel::refresh);
 }
 
 int TagListModel::rowCount(const QModelIndex& parent) const {
@@ -47,3 +31,21 @@ QHash<int, QByteArray> TagListModel::roleNames() const {
     return roles;
 }
 
+void TagListModel::refresh() {
+    beginResetModel();
+    QSet<QString> tagset;
+    const int row_count = m_presets->rowCount();
+    for (int row = 0; row < row_count; row++) {
+        QModelIndex index = m_presets->index(row, 0);
+        QStringList tag_list = index.data(PresetListModel::TagListRole).toStringList();
+        for (const QString& tag : tag_list) {
+            tagset.insert(tag);
+        }
+    }
+    m_tags.clear();
+    for (const QString& tag : tagset) {
+        m_tags << tag;
+    }
+    m_tags.sort();
+    endResetModel();
+}

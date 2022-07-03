@@ -26,6 +26,8 @@ public:
     QJsonObject serialize() const;
     Preset* copy();
 
+    const size_t MAX_TAGS = 3;
+
     QString name() const {
         return m_name;
     }
@@ -69,6 +71,12 @@ public:
 
     const Parameters& params() const {
         return *m_parameters;
+    }
+
+    Q_INVOKABLE bool setTag(const QString& tag, bool state);
+
+    Q_INVOKABLE bool hasTag(const QString& tag) {
+        return m_tags.contains(tag);
     }
 
     bool isFactory() const {

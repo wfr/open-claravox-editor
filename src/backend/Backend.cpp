@@ -52,6 +52,15 @@ Backend::Backend(QObject *parent) :
         settings().setValue("favorites", favorites);
     });
 
+    connect(m_presets, &PresetListModel::tagsChanged, [this]() {
+        // Ugly: Assume that only the current preset's tags are ever modified.
+        // This is true for now.
+        // We probably should move the load/save logic out from the Backend into the PresetListModel...
+        // and/or the modified flag should be in the Preset model itself
+        m_current_preset_modified = true;
+        saveCurrentPreset();
+    });
+
     connect(m_presets, &PresetListModel::dataChanged, [this]() {
         m_filtered_presets->invalidate();
         m_sorted_presets->invalidate();

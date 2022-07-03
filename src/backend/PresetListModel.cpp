@@ -157,12 +157,27 @@ QStringList PresetListModel::favorites() {
 }
 
 void PresetListModel::setFavorites(const QStringList& favorites, bool notify) {
+    // This function is only called once during initialization.
+    // If this ever changes, implement proper model handling/events here.
     for (const auto& name : favorites) {
         m_favorites.insert(name);
     }
     if (notify) {
         emit favoritesChanged();
     }
-    // This function is only called once during initialization.
-    // If this ever changes, implement proper model handling/events here.
+}
+
+bool PresetListModel::setTag(const QString& name, const QString& tag, bool state) {
+    Preset* preset = byName(name);
+    if (preset == nullptr) {
+        return false;
+    }
+    bool changed = preset->setTag(tag, state);
+    if (changed) {
+        emit tagsChanged();
+        int row = findRow(preset);
+        emit dataChanged(index(row), index(row), {TagListRole});
+    }
+//    qDebug() << "Preset " << name << "now has" << preset->tags().count() << "tags";
+    return changed;
 }
